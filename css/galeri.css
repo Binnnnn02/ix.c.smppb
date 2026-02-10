@@ -1,8 +1,6 @@
 .content {
   margin-top: 80px;
   padding: 20px;
-  position: relative;
-  z-index: 1;
 }
 
 .info {
@@ -15,7 +13,7 @@
 .folder-galeri {
   display: grid;
   gap: 20px;
-  max-width: 1000px;
+  max-width: 900px;
   margin: auto;
 }
 
@@ -23,22 +21,34 @@
   background: #f1f5f9;
   border-radius: 14px;
   overflow: hidden;
+  text-decoration: none;
   cursor: pointer;
+
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.folder:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.25);
+}
+
+.folder:active {
+  transform: scale(0.97);
 }
 
 .folder-header {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 14px;
+  padding: 16px;
   background: #0f172a;
 }
 
 .folder-header img {
-  width: 90px;
-  height: 60px;
+  width: 100px;
+  height: 65px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .folder-header h2 {
@@ -46,65 +56,14 @@
   font-size: 18px;
 }
 
-.folder-content {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  padding: 14px;
-
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 1s ease;
-}
-
-.folder.open .folder-content {
-  max-height: 1000px;
-}
-
-.folder-content img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: 6px;
-  display: block;
-}
-
 @media (min-width: 768px) {
-  .folder-content {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .folder-content img {
-    height: 160px;
+  .folder-galeri {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.galeri-img {
-  cursor: pointer;
-}
-
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-}
-
-.lightbox img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 10px;
-}
-
-.folder-galeri,
-.folder,
-.folder-content,
-.folder-content img {
-  position: relative;
-  z-index: 1;
-  pointer-events: auto;
+@media (min-width: 1024px) {
+  .folder-galeri {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
