@@ -5,11 +5,21 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  background-color: #f9fafb;
-  color: #111827;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f1f5f9;
+  color: #0f172a;
+  overflow-x: hidden;
+  padding-top: 55px;
+}
+
+/* Hilangin outline biru */
+a, button {
+  outline: none;
 }
 
 .navbar {
@@ -17,218 +27,296 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 56px;
+  height: 55px;
+  background: #0f172a;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background-color: #0f172a;
+  justify-content: space-between;
   padding: 0 20px;
-  z-index: 1000;
+  z-index: 3000;
 }
 
 .logo {
   color: #38bdf8;
-  font-weight: 700;
   font-size: 18px;
-}
-
-.hamburger {
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  user-select: none;
-  z-index: 1001;
-}
-
-.hamburger span {
-  width: 26px;
-  height: 3px;
-  background-color: #fff;
-  margin: 4px 0;
-  border-radius: 2px;
+  font-weight: 700;
+  letter-spacing: 1px;
   transition: 0.3s ease;
 }
 
-.hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 10px);
-}
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-}
-.hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -11px);
+.logo:hover {
+  transform: scale(1.05);
 }
 
 .menu {
-  position: fixed;
-  top: 56px;
-  left: 0;
-  width: 100%;
-  background-color: #020617;
   display: flex;
-  flex-direction: column;
-  transform: translateY(-20px);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s ease;
-  z-index: 999;
-}
-
-.menu.show {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
+  gap: 24px;
 }
 
 .menu a {
-  color: #e5e7eb;
+  position: relative;
+  color: #e2e8f0;
   text-decoration: none;
-  padding: 14px 20px;
   font-weight: 500;
+  padding: 5px 0;
+  transition: all 0.25s ease;
 }
 
 .menu a:hover {
-  background-color: #0f172a;
   color: #38bdf8;
+  transform: scale(1.08);
+  text-shadow: 0 0 8px rgba(56,189,248,0.6);
 }
 
-.overlay {
-  position: fixed;
-  top: 56px;
-  left: 0;
+.menu a:active {
+  transform: scale(0.92);
+}
+
+.menu a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #38bdf8;
+  transition: 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.menu a:hover::after {
   width: 100%;
-  height: calc(100vh - 56px);
-  background: rgba(0, 0, 0, 0.55);
+}
+
+.menu a.active {
+  color: #38bdf8;
+  font-weight: 600;
+  transform: scale(1.05);
+}
+
+.menu a.active::after {
+  width: 100%;
+}
+
+.hamburger {
+  position: relative;
+  width: 30px;
+  height: 22px;
+  display: none;
+  cursor: pointer;
+  z-index: 4000;
+}
+
+.hamburger span {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: white;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.hamburger span:nth-child(1) { top: 0; }
+.hamburger span:nth-child(2) { top: 9px; }
+.hamburger span:nth-child(3) { bottom: 0; }
+
+.hamburger.active span:nth-child(1) {
+  top: 9px;
+  transform: rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 998;
 }
 
-.overlay.show {
-  opacity: 1;
-  pointer-events: auto;
+.hamburger.active span:nth-child(3) {
+  bottom: 9px;
+  transform: rotate(-45deg);
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
+
   .hamburger {
-    display: none;
-  }
-
-  .overlay {
-    display: none;
+    display: block;
   }
 
   .menu {
-    position: static;
-    flex-direction: row;
-    transform: none;
+    position: fixed;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    background: #0f172a;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    padding: 30px 0;
+
+    transform: translateY(-120%);
+    opacity: 0;
+    transition: transform 0.35s ease, opacity 0.3s ease;
+
+    z-index: 2500;
+  }
+
+  .menu.show {
+    transform: translateY(0);
     opacity: 1;
-    pointer-events: auto;
-    background: transparent;
-    width: auto;
   }
 
   .menu a {
-    padding: 8px 14px;
+    font-size: 18px;
   }
+}
 
-  .menu a:hover {
-    background: none;
-  }
+.hero {
+  padding: 0;
 }
 
 .slider {
   width: 100%;
-  max-width: 420px;
-  margin: 56px auto 12px; /* ⬅️ INI YANG FIX JARAK */
+  max-width: 100%;
+  margin: 0;
+  border-radius: 0;
   overflow: hidden;
-  background: #000;
-}
-
-@media (min-width: 768px) {
-  .slider {
-    max-width: 900px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .slider {
-    max-width: 1100px;
-  }
+  aspect-ratio: 16 / 9;
 }
 
 .slides {
-  cursor: grab;
-  user-select: none;
   display: flex;
-  transition: transform 0.6s ease;
-}
-
-.slides:active {
-  cursor: grabbing;
+  height: 100%;
+  transition: transform 0.8s ease;
 }
 
 .slides img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 16 / 9;
   object-fit: cover;
   flex-shrink: 0;
-  display: block;
 }
 
-.content {
-  padding: 16px;
-  position: relative;
-  z-index: 1;
-}
-
-h1 {
-  color: #0f766e;
-  margin-bottom: 8px;
+.hero-intro {
   text-align: center;
+  padding: 60px 20px 30px;
 }
 
-p {
-  color: #334155;
-  line-height: 1.6;
+.hero-intro h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.hero-intro p {
+  color: #475569;
+  font-size: 16px;
+}
+
+.about {
+  padding: 70px 20px;
   text-align: center;
+  background: #ffffff;
 }
 
-.hamburger:active,
-.menu a:active {
+.about h2 {
+  font-size: 28px;
+  margin-bottom: 14px;
+}
+
+.about p {
+  max-width: 650px;
+  margin: auto;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #475569;
+}
+
+.cta {
+  padding: 60px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  color: white;
+}
+
+.cta h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 34px;
+  border-radius: 999px;
+  background: white;
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+
+.btn:active {
   transform: scale(0.96);
 }
 
-.slider {
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.footer {
+  background: #0f172a;
+  padding: 25px;
+  text-align: center;
 }
 
-.slider::before {
-  content: "Banner belum tersedia";
+.footer p {
   color: #94a3b8;
   font-size: 14px;
-  letter-spacing: 0.5px;
 }
 
-.slider:has(img)::before {
-  display: none;
+@media (max-width: 768px) {
+
+  .hero-intro h1 {
+    font-size: 24px;
+  }
+
+  .hero-intro p {
+    font-size: 14px;
+  }
+
+  .about {
+    padding: 45px 18px;
+  }
+
+  .about h2 {
+    font-size: 22px;
+  }
+
+  .about p {
+    font-size: 15px;
+  }
+
+  .cta {
+    padding: 45px 18px;
+  }
+
+  .cta h2 {
+    font-size: 20px;
+  }
+
+  .btn {
+    padding: 12px 26px;
+    font-size: 14px;
+  }
 }
 
-.slides {
-  width: 100%;
-}
-
-.slides img {
-  width: 100%;
+html, body {
   height: 100%;
-  object-fit: cover;
 }
 
 body {
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
