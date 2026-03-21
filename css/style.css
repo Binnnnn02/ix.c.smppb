@@ -7,6 +7,7 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
@@ -15,9 +16,15 @@ body {
   color: #0f172a;
   overflow-x: hidden;
   padding-top: 55px;
+
+  display: flex;
+  flex-direction: column;
 }
 
-/* Hilangin outline biru */
+main {
+  flex: 1;
+}
+
 a, button {
   outline: none;
 }
@@ -135,7 +142,6 @@ a, button {
 }
 
 @media (max-width: 768px) {
-
   .hamburger {
     display: block;
   }
@@ -150,11 +156,9 @@ a, button {
     align-items: center;
     gap: 22px;
     padding: 30px 0;
-
     transform: translateY(-120%);
     opacity: 0;
     transition: transform 0.35s ease, opacity 0.3s ease;
-
     z-index: 2500;
   }
 
@@ -174,9 +178,6 @@ a, button {
 
 .slider {
   width: 100%;
-  max-width: 100%;
-  margin: 0;
-  border-radius: 0;
   overflow: hidden;
   aspect-ratio: 16 / 9;
 }
@@ -196,36 +197,30 @@ a, button {
 
 .hero-intro {
   text-align: center;
-  padding: 60px 20px 30px;
+  padding: 30px 20px 25px;
 }
 
-.hero-intro h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.hero-intro p {
-  color: #475569;
-  font-size: 16px;
-}
-
-.about {
-  padding: 70px 20px;
-  text-align: center;
-  background: #ffffff;
-}
-
-.about h2 {
-  font-size: 28px;
+.aloha {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
   margin-bottom: 14px;
+  text-shadow: 0 0 20px rgba(56,189,248,0.3);
 }
 
-.about p {
-  max-width: 650px;
-  margin: auto;
-  font-size: 16px;
-  line-height: 1.7;
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.subtitle {
   color: #475569;
+  font-size: 15px;
 }
 
 .cta {
@@ -261,6 +256,25 @@ a, button {
   transform: scale(0.96);
 }
 
+.about {
+  padding: 70px 20px;
+  text-align: center;
+  background: #ffffff;
+}
+
+.about h2 {
+  font-size: 28px;
+  margin-bottom: 14px;
+}
+
+.about p {
+  max-width: 650px;
+  margin: auto;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #475569;
+}
+
 .footer {
   background: #0f172a;
   padding: 25px;
@@ -272,26 +286,31 @@ a, button {
   font-size: 14px;
 }
 
-@media (max-width: 768px) {
+.footer a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: 0.3s;
+}
 
-  .hero-intro h1 {
-    font-size: 24px;
+.footer a:hover {
+  color: #38bdf8;
+}
+
+@media (max-width: 768px) {
+  .aloha {
+    font-size: 28px;
   }
 
-  .hero-intro p {
+  .title {
+    font-size: 20px;
+  }
+
+  .subtitle {
     font-size: 14px;
   }
 
   .about {
     padding: 45px 18px;
-  }
-
-  .about h2 {
-    font-size: 22px;
-  }
-
-  .about p {
-    font-size: 15px;
   }
 
   .cta {
@@ -308,15 +327,20 @@ a, button {
   }
 }
 
-html, body {
-  height: 100%;
+.ig-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 14px;
+
+  transition: 0.3s ease;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  flex: 1;
+.ig-link:hover {
+  color: #38bdf8;
+  transform: translateY(-2px);
 }
