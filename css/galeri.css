@@ -17,7 +17,7 @@
 
 .banner {
   width: 100%;
-  height: 350px;
+  height: 220px;
   overflow: hidden;
 }
 
@@ -26,6 +26,18 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+@media (min-width: 768px) {
+  .banner {
+    height: 300px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .banner {
+    height: 350px;
+  }
 }
 
 .folder-galeri {
@@ -39,7 +51,7 @@
 .folder {
   position: relative;
   display: block;
-  aspect-ratio: 16 / 9; /* HP */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 16px;
   background: #111;
@@ -131,6 +143,20 @@
   text-align: center;
   padding: 25px 10px;
   margin-top: 60px;
+}
+
+.footer a {
+  display: inline-block;
+  color: #94a3b8;
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer a:hover {
+  color: #38bdf8;
+  transform: scale(1.1);
 }
 
 .overlay {
