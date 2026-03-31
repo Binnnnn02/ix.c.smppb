@@ -119,11 +119,7 @@ function updateCountdown() {
   const now = new Date();
   const target = new Date();
 
-  target.setHours(22, 13, 0, 0);
-
-  if (now > target) {
-    target.setDate(target.getDate() + 1);
-  }
+  target.setHours(22, 16, 0, 0);
 
   const diff = target - now;
 
