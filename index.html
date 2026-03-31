@@ -1,128 +1,143 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintenance</title>
+  <meta charset="UTF-8">
+  <title>Launching Soon</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(270deg, #1e1e2f, #3a3a4f, #1e1e2f);
+      background-size: 600% 600%;
+      animation: gradientMove 12s ease infinite;
+      font-family: Arial, sans-serif;
+      color: white;
+      transition: background 1s;
+    }
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: #0f172a;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-        }
+    @keyframes gradientMove {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
 
-        .container {
-            max-width: 500px;
-        }
+    .container {
+      text-align: center;
+      background: rgba(0,0,0,0.6);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
 
-        h1 {
-            font-size: 2.2em;
-            margin-bottom: 10px;
-        }
+    .container:hover {
+      transform: scale(1.03);
+    }
 
-        p {
-            opacity: 0.8;
-            margin-bottom: 30px;
-        }
+    h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+      color: #ff4d4d;
+    }
 
-        /* 🔄 Spinner */
-        .loader {
-            width: 70px;
-            height: 70px;
-            border: 6px solid rgba(255,255,255,0.2);
-            border-top: 6px solid #38bdf8;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
+    p {
+      opacity: 0.7;
+    }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
 
-        /* ⏳ Countdown kotak */
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
+    .box {
+      background: #222;
+      padding: 20px;
+      border-radius: 8px;
+      min-width: 80px;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
 
-        .box {
-            background: rgba(255,255,255,0.08);
-            padding: 15px;
-            border-radius: 10px;
-            width: 70px;
-            box-shadow: 0 0 10px rgba(56,189,248,0.3);
-        }
+    .box:hover {
+      background: #333;
+      transform: translateY(-5px);
+    }
 
-        .number {
-            font-size: 1.8em;
-            font-weight: bold;
-        }
+    .number {
+      font-size: 32px;
+      font-weight: bold;
+    }
 
-        .label {
-            font-size: 0.8em;
-            opacity: 0.7;
-        }
+    .label {
+      font-size: 12px;
+      opacity: 0.6;
+      margin-top: 5px;
+    }
 
-        .footer {
-            margin-top: 20px;
-            font-size: 0.85em;
-            opacity: 0.6;
-        }
-    </style>
+    .done {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #00ffcc;
+      transition: opacity 0.5s ease;
+    }
+  </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="loader"></div>
-    <h1>Sedang Maintenance</h1>
-    <p>Website kami sedang diperbarui.<br>Mohon tunggu sebentar 🙏</p>
+  <h1>🚀 Web Launching</h1>
+  <p>Kami akan segera hadir</p>
+  <p>Launching pada <b>18:30</b></p>
 
-    <!-- ⏳ Countdown -->
-    <div class="countdown">
-        <div class="box">
-            <div class="number" id="minutes">01</div>
-            <div class="label">Menit</div>
-        </div>
-        <div class="box">
-            <div class="number" id="seconds">00</div>
-            <div class="label">Detik</div>
-        </div>
+  <div class="countdown">
+    <div class="box">
+      <div id="hours" class="number">00</div>
+      <div class="label">Jam</div>
     </div>
+    <div class="box">
+      <div id="minutes" class="number">00</div>
+      <div class="label">Menit</div>
+    </div>
+    <div class="box">
+      <div id="seconds" class="number">00</div>
+      <div class="label">Detik</div>
+    </div>
+  </div>
 
-    <div class="footer">© 2026 Website Kamu</div>
+  <div id="done" class="done"></div>
 </div>
 
 <script>
-    let time = 60; // total detik (1 menit)
+function updateCountdown() {
+  const now = new Date();
+  const target = new Date();
+  target.setHours(18, 30, 0, 0);
 
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
+  const diff = target - now;
 
-    const countdown = setInterval(() => {
-        let minutes = Math.floor(time / 60);
-        let seconds = time % 60;
+  if (diff <= 0) {
+    document.querySelector(".countdown").style.display = "none";
+    const done = document.getElementById("done");
+    done.innerText = "🎉 Website sudah live!";
+    done.style.opacity = "1";
+    return;
+  }
 
-        minutesEl.textContent = String(minutes).padStart(2, '0');
-        secondsEl.textContent = String(seconds).padStart(2, '0');
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
 
-        if (time <= 0) {
-            clearInterval(countdown);
-        }
+  document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+  document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+  document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+}
 
-        time--;
-    }, 1000);
+setInterval(updateCountdown, 1000);
+updateCountdown();
 </script>
 
 </body>
