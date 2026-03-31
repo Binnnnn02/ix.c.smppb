@@ -118,7 +118,12 @@
 function updateCountdown() {
   const now = new Date();
   const target = new Date();
-  target.setHours(05, 00, 0, 0);
+
+  target.setHours(5, 0, 0, 0);
+
+  if (now > target) {
+    target.setDate(target.getDate() + 1);
+  }
 
   const diff = target - now;
 
@@ -127,6 +132,11 @@ function updateCountdown() {
     const done = document.getElementById("done");
     done.innerText = "🎉 Website sudah live!";
     done.style.opacity = "1";
+
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1500);
+
     return;
   }
 
@@ -143,6 +153,7 @@ function flipNumber(id, value) {
   const el = document.getElementById(id);
   if (el.innerText !== value) {
     el.classList.add("flip");
+
     setTimeout(() => {
       el.innerText = value;
       el.classList.remove("flip");
