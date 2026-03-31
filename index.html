@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        /* 🔄 Spinner */
+        .loader {
+            width: 70px;
+            height: 70px;
+            border: 6px solid rgba(255,255,255,0.2);
+            border-top: 6px solid #38bdf8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ⏳ Countdown kotak */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .box {
+            background: rgba(255,255,255,0.08);
+            padding: 15px;
+            border-radius: 10px;
+            width: 70px;
+            box-shadow: 0 0 10px rgba(56,189,248,0.3);
+        }
+
+        .number {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .label {
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.85em;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="loader"></div>
+    <h1>Sedang Maintenance</h1>
+    <p>Website kami sedang diperbarui.<br>Mohon tunggu sebentar 🙏</p>
+
+    <!-- ⏳ Countdown -->
+    <div class="countdown">
+        <div class="box">
+            <div class="number" id="minutes">01</div>
+            <div class="label">Menit</div>
+        </div>
+        <div class="box">
+            <div class="number" id="seconds">00</div>
+            <div class="label">Detik</div>
+        </div>
+    </div>
+
+    <div class="footer">© 2026 Website Kamu</div>
+</div>
+
+<script>
+    let time = 60; // total detik (1 menit)
+
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    const countdown = setInterval(() => {
+        let minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+
+        minutesEl.textContent = String(minutes).padStart(2, '0');
+        secondsEl.textContent = String(seconds).padStart(2, '0');
+
+        if (time <= 0) {
+            clearInterval(countdown);
+        }
+
+        time--;
+    }, 1000);
+</script>
+
+</body>
+</html>
