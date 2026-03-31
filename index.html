@@ -2,50 +2,56 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Web Launching</title>
+
   <style>
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       background: linear-gradient(135deg, #00c6ff, #0072ff);
       font-family: Arial, sans-serif;
       color: #fff;
+      padding: 20px;
     }
 
     .container {
       text-align: center;
       background: rgba(255,255,255,0.1);
-      padding: 40px;
+      padding: clamp(20px, 5vw, 40px);
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 500px;
     }
 
     h1 {
-      font-size: 42px;
+      font-size: clamp(26px, 6vw, 42px);
       margin-bottom: 10px;
-      color: #ffffff;
     }
 
     p {
+      font-size: clamp(14px, 3.5vw, 16px);
       opacity: 0.9;
     }
 
     .countdown {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
+      gap: clamp(10px, 3vw, 20px);
+      margin-top: 25px;
+      flex-wrap: wrap;
     }
 
     .box {
       background: rgba(255,255,255,0.15);
-      padding: 20px 18px;
+      padding: clamp(12px, 3vw, 20px);
       border-radius: 10px;
       perspective: 600px;
-      min-width: 80px;
+      min-width: clamp(70px, 20vw, 90px);
       text-align: center;
       transition: transform 0.3s ease;
     }
@@ -55,9 +61,8 @@
     }
 
     .number {
-      font-size: 36px;
+      font-size: clamp(24px, 6vw, 36px);
       font-weight: bold;
-      color: #fff;
       display: block;
       transform-style: preserve-3d;
       transition: transform 0.4s ease-in-out;
@@ -68,22 +73,22 @@
     }
 
     .label {
-      font-size: 14px;
+      font-size: clamp(12px, 3vw, 14px);
       opacity: 0.8;
       margin-top: 5px;
       display: block;
     }
 
     .done {
-      margin-top: 25px;
-      font-size: 22px;
-      color: #ffffff;
+      margin-top: 20px;
+      font-size: clamp(16px, 4vw, 22px);
       font-weight: bold;
       opacity: 0;
       transition: opacity 0.5s ease;
     }
   </style>
 </head>
+
 <body>
 
 <div class="container">
