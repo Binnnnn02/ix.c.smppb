@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maintenance</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:system-ui, sans-serif;
+  background:linear-gradient(135deg,#0ea5e9,#2563eb);
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+
+.container{
+  background:rgba(255,255,255,0.1);
+  padding:30px;
+  border-radius:16px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  max-width:400px;
+  width:100%;
+  animation:fadeIn 1s ease;
+}
+
+h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+p{
+  opacity:0.9;
+  margin-bottom:20px;
+}
+
+.loader{
+  width:60px;
+  height:60px;
+  border:5px solid rgba(255,255,255,0.3);
+  border-top:5px solid white;
+  border-radius:50%;
+  margin:20px auto;
+  animation:spin 1s linear infinite;
+}
+
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-top:20px;
+}
+
+.box{
+  background:rgba(255,255,255,0.15);
+  padding:12px;
+  border-radius:10px;
+  min-width:70px;
+}
+
+.number{
+  font-size:24px;
+  font-weight:bold;
+}
+
+.label{
+  font-size:12px;
+  opacity:0.8;
+}
+
+.footer{
+  margin-top:20px;
+  font-size:12px;
+  opacity:0.7;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🚧 Maintenance</h1>
+  <p>Website sedang diperbaiki, tunggu ya...</p>
+
+  <div class="loader"></div>
+
+  <div class="countdown">
+    <div class="box">
+      <div id="hours" class="number">00</div>
+      <div class="label">Jam</div>
+    </div>
+    <div class="box">
+      <div id="minutes" class="number">00</div>
+      <div class="label">Menit</div>
+    </div>
+    <div class="box">
+      <div id="seconds" class="number">00</div>
+      <div class="label">Detik</div>
+    </div>
+  </div>
+
+  <div class="footer">Kami akan segera kembali 🚀</div>
+</div>
+
+<script>
+function updateCountdown(){
+  const now = new Date();
+
+  const target = new Date();
+  target.setHours(23,59,59,0);
+
+  const diff = target - now;
+
+  if(diff <= 0){
+    document.querySelector(".countdown").innerHTML = "Segera online!";
+    return;
+  }
+
+  const h = String(Math.floor(diff/(1000*60*60))).padStart(2,'0');
+  const m = String(Math.floor((diff/(1000*60))%60)).padStart(2,'0');
+  const s = String(Math.floor((diff/1000)%60)).padStart(2,'0');
+
+  document.getElementById("hours").innerText = h;
+  document.getElementById("minutes").innerText = m;
+  document.getElementById("seconds").innerText = s;
+}
+
+setInterval(updateCountdown,1000);
+updateCountdown();
+</script>
+
+</body>
+</html>
