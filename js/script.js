@@ -2,71 +2,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const hamburger = document.getElementById("hamburger");
   const menu = document.getElementById("menu");
-  const navLinks = document.querySelectorAll("#menu a");
+  const blur = document.getElementById("blur");
 
   if (hamburger && menu) {
-
     hamburger.addEventListener("click", () => {
       menu.classList.toggle("show");
       hamburger.classList.toggle("active");
+      if (blur) blur.classList.toggle("show");
     });
 
-    navLinks.forEach(link => {
-      link.addEventListener("click", () => {
+    if (blur) {
+      blur.addEventListener("click", () => {
         menu.classList.remove("show");
         hamburger.classList.remove("active");
+        blur.classList.remove("show");
       });
-    });
+    }
   }
 
-  const currentPage = window.location.pathname.split("/").pop();
+  const slides = document.querySelector(".slides");
 
-  navLinks.forEach(link => {
-    const linkPage = link.getAttribute("href");
-
-    // otomatis aktif sesuai halaman
-    if (linkPage === currentPage) {
-      link.classList.add("active");
-    }
-
-    // animasi klik
-    link.addEventListener("click", function () {
-      navLinks.forEach(l => l.classList.remove("active"));
-      this.classList.add("active");
-    });
-  });
-
-  const slider = document.querySelector(".slider");
-  const slides = document.querySelector(".slider .slides");
-
-  if (!slider || !slides) return;
+  if (!slides) return;
 
   let index = 0;
-  const totalSlides = slides.children.length;
+  const total = slides.children.length;
 
-  if (totalSlides <= 1) return;
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
 
   function showSlide(i) {
     slides.style.transform = `translateX(-${i * 100}%)`;
   }
 
   function nextSlide() {
-    index = (index + 1) % totalSlides;
+    index = (index + 1) % total;
     showSlide(index);
   }
 
   let autoSlide = setInterval(nextSlide, 4000);
-  let startX = 0;
-  let currentX = 0;
-  let isDragging = false;
 
-  slides.addEventListener("touchstart", e => {
+  slides.addEventListener("touchstart", (e) => {
     startX = e.touches[0].clientX;
     isDragging = true;
     clearInterval(autoSlide);
   }, { passive: true });
 
-  slides.addEventListener("touchmove", e => {
+  slides.addEventListener("touchmove", (e) => {
     if (!isDragging) return;
     currentX = e.touches[0].clientX;
   }, { passive: true });
@@ -77,9 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const diff = startX - currentX;
 
     if (diff > 50) {
-      index = (index + 1) % totalSlides;
+      index = (index + 1) % total;
     } else if (diff < -50) {
-      index = (index - 1 + totalSlides) % totalSlides;
+      index = (index - 1 + total) % total;
     }
 
     showSlide(index);
