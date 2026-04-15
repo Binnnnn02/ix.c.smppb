@@ -170,3 +170,34 @@
 .overlay {
   display: none;
 }
+
+.multi-link {
+  position: relative;
+}
+
+.multi-link .links {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+.multi-link .links a {
+  flex: 1;
+  text-align: center;
+  padding: 6px;
+  font-size: 12px;
+  background: rgba(255,255,255,0.9);
+  color: #064e3b;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.multi-link .links a:hover {
+  background: white;
+}
