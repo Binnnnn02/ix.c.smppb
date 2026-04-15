@@ -1,0 +1,8 @@
+{
+  "rewrites": [ 
+    { "source": "/galeri", "destination": "/galeri.html" },
+    { "source": "/galeri", "destination": "/galeri.html" },
+    { "source": "/info", "destination": "/info.html" },
+    { "source": "/us", "destination": "/us.html" }
+  ]
+}
