@@ -125,9 +125,9 @@ p{
 
 <script>
 function updateCountdown(){
-  target.setHours(23,59,59,0);
 
-  const diff = target - now;
+const diff = target - now;
+  target.setHours(23,59,59,0);
 
   if(diff <= 0){
     document.querySelector(".countdown").innerHTML = "Segera online!";
