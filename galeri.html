@@ -1,111 +1,149 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Galeri IX-C</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halaman Dalam Pengembangan</title>
 
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/galeri.css" />
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    padding:20px;
+}
+
+.container{
+    max-width:700px;
+    width:100%;
+    text-align:center;
+}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:40px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+.badge{
+    display:inline-block;
+    background:#f59e0b;
+    color:black;
+    padding:8px 16px;
+    border-radius:999px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+h1{
+    margin-bottom:15px;
+    font-size:2.5rem;
+}
+
+p{
+    color:#cbd5e1;
+    line-height:1.7;
+}
+
+#countdown{
+    margin:25px 0;
+    font-size:1.8rem;
+    font-weight:bold;
+    color:#38bdf8;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 24px;
+    background:#38bdf8;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    opacity:.9;
+}
+
+.footer{
+    margin-top:20px;
+    font-size:.9rem;
+    color:#94a3b8;
+}
+</style>
 </head>
-
 <body>
 
-  <nav class="navbar">
-  <div class="logo">IX-C</div>
+<div class="container">
+    <div class="card">
 
-  <div id="hamburger" class="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+        <div class="badge">🚧 Dalam Pengembangan</div>
 
-  <div id="menu" class="menu">
-    <a href="/" class="active">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z"/>
-  </svg>
-  Home
-</a>
+        <h1>Halaman Sedang Dikerjakan</h1>
 
-<a href="/galeri">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M4 4h16v16H4z" fill="none"/>
-    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-2 0H5V5h14v14z"/>
-    <circle cx="8.5" cy="8.5" r="1.5"/>
-    <path d="M21 15l-5-5-4 4-2-2-5 5"/>
-  </svg>
-  Galeri
-</a>
+        <p>
+            Halaman yang Anda tuju saat ini masih dalam tahap pengembangan.
+            Beberapa fitur mungkin belum tersedia atau masih dalam proses penyempurnaan.
+        </p>
 
-    <a href="/info">Tentang</a>
-  </div>
-</nav>
+        <div id="countdown">Memuat...</div>
 
-<div id="blur" class="blur-bg"></div>
+        <p>
+            Perkiraan selesai:
+            <br>
+            <strong>10 Juni 2026 • 10:00 WIB</strong>
+        </p>
 
-  <section class="banner">
-    <img src="img/bulbas1.jpg" alt="Banner Galeri IX-C">
-  </section>
+        <a href="index.html" class="btn">← Kembali ke Beranda</a>
 
-  <main class="content">
-    <h1 class="info">Galeri IX-C</h1>
+        <div class="footer">
+            Terima kasih atas kesabarannya.
+        </div>
 
-    <section class="folder-galeri">
-
-      <a href="https://drive.google.com/drive/folders/12JWIyFh1iTZ_zs83IKBMEtQsMcpWWLh1"
-         class="folder"
-         target="_blank"
-         rel="noopener">
-        <img src="img/hbd1.jpg" alt="HBD Bu Anggi">
-        <h2>HBD Bu Anggi</h2>
-      </a>
-
-      <a href="https://drive.google.com/drive/folders/1PEXc1QgCMikzfFUapJ4ss2mjlU4-Z_eW"
-         class="folder"
-         target="_blank"
-         rel="noopener">
-        <img src="img/agustus1.jpg" alt="Agustus-an">
-        <h2>Agustus-an</h2>
-      </a>
-
-        <div class="folder multi-link">
-
-    <img src="img/bulbas1.jpg" alt="Bulan Bahasa">
-
-    <div class="links">
-      <a href="https://drive.google.com/drive/folders/1_9LwLqBnEzvNvmro25JPfxjzHDBOYyqV" target="_blank">Bulbas 1</a>
-      <a href="https://drive.google.com/drive/folders/1zQqQnKRPTixRRB6EDG78ongT3TdUWQGa" target="_blank">Bulbas 2</a>
     </div>
-  </div>
+</div>
 
-    </section>
-  </main>
-<footer class="footer">
-  <a href="https://www.instagram.com/9c.permatabunda?igsh=MmtuMHU1dWtjYjBt" 
-     class="ig-link" 
-     target="_blank">
+<script>
+const targetDate = new Date("2026-06-10T10:00:00+07:00");
 
-    <svg xmlns="http://www.w3.org/2000/svg" 
-         width="26" 
-         height="26" 
-         fill="currentColor" 
-         viewBox="0 0 24 24">
-      <path d="M7.75 2C4.57 2 2 4.57 2 7.75v8.5C2 19.43 4.57 22 7.75 22h8.5C19.43 22 22 19.43 22 16.25v-8.5C22 4.57 19.43 2 16.25 2h-8.5zm0 2h8.5C18.22 4 20 5.78 20 7.75v8.5c0 1.97-1.78 3.75-3.75 3.75h-8.5C5.78 20 4 18.22 4 16.25v-8.5C4 5.78 5.78 4 7.75 4zm8.75 1.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>
-    </svg>
-  </a>
+function updateCountdown(){
+    const now = new Date();
+    const diff = targetDate - now;
 
-<br>
+    if(diff <= 0){
+        document.getElementById("countdown").innerHTML =
+            "✅ Halaman seharusnya sudah tersedia";
+        return;
+    }
 
-  <p>© 2026 IX-C SMP PB. All Rights Reserved.</p>
-  <p>Made with 🤍.</p>
-  <a href="https://www.instagram.com/biibiinn._?igsh=MWpodnY5MWFidWI3cg==" target="_blank">
-    @Bin
-  </a>
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
 
-</footer>
+    document.getElementById("countdown").innerHTML =
+        `${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik`;
+}
 
-<script src="js/script.js"></script>
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
 
 </body>
 </html>
