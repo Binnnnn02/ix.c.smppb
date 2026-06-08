@@ -1,203 +1,277 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* === PAGE HEADER === */
+.page-header {
+    max-width: 1200px;
+    margin: 3rem auto 0;
+    padding: 0 2rem;
+    text-align: center;
+    animation: fadeInDown 0.6s ease-out;
 }
 
-.content {
-  padding: 40px 20px;
+.page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: var(--dark);
 }
 
-.info {
-  font-size: 28px;
-  text-align: center;
-  color: #0f172a;
-  margin-bottom: 35px;
+.page-header h1 span {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-.banner {
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
+.page-header p {
+    color: var(--gray);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
 }
 
-.banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
+/* === FILTER BUTTONS === */
+.filter-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.6s ease-out 0.3s backwards;
 }
 
-@media (min-width: 768px) {
-  .banner {
-    height: 300px;
-  }
+.filter-btn {
+    padding: 0.7rem 1.5rem;
+    border: 2px solid var(--primary);
+    background: white;
+    color: var(--primary);
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
 }
 
-@media (min-width: 1024px) {
-  .banner {
-    height: 350px;
-  }
+.filter-btn:hover,
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
 }
 
-.folder-galeri {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  max-width: 800px;
-  margin: auto;
-  position: relative;
-  z-index: 1;
+/* === GALLERY GRID === */
+.gallery-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
 }
 
-.folder {
-  position: relative;
-  display: block;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-radius: 16px;
-  background: #111;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-  z-index: 1;
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
 }
 
-@media (min-width: 768px) {
-
-  .folder-galeri {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .folder {
-    aspect-ratio: 5 / 4;
-  }
-
+.gallery-item {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    animation: scaleIn 0.5s ease-out forwards;
 }
 
-.folder img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
+.gallery-item.hidden {
+    display: none;
 }
 
-.folder::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.8),
-    rgba(0,0,0,0.3),
-    transparent 65%
-  );
-  opacity: 1;
-  transition: opacity 0.3s ease;
+.gallery-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
 }
 
-.folder h2 {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
-  margin: 0;
-  color: white;
-  font-size: 17px;
-  font-weight: 600;
-  z-index: 2;
-  transition: all 0.3s ease;
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-@media (hover: hover) and (min-width: 768px) {
+.gallery-item:hover img {
+    transform: scale(1.08);
+}
 
-  .folder::after {
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     opacity: 0;
-  }
+    transition: opacity 0.3s ease;
+    padding: 2rem;
+    text-align: center;
+}
 
-  .folder h2 {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  .folder:hover::after {
+.gallery-item:hover .gallery-overlay {
     opacity: 1;
-  }
-
-  .folder:hover h2 {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .folder:hover img {
-    transform: scale(1.05);
-  }
-
-  .folder:hover {
-    transform: translateY(-6px) scale(1.03);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
-  }
-
 }
 
-.folder:active {
-  transform: scale(0.97);
+.gallery-overlay-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
 }
 
-.footer {
-  text-align: center;
-  padding: 25px 10px;
-  margin-top: 60px;
+.gallery-overlay-text {
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
-.footer a {
-  display: inline-block;
-  color: #94a3b8;
-  font-size: 18px;
-  margin-bottom: 10px;
-  text-decoration: none;
-  transition: 0.3s;
+.gallery-overlay-date {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
 }
 
-.footer a:hover {
-  color: #38bdf8;
-  transform: scale(1.1);
+/* === MODAL === */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    animation: fadeInModal 0.3s ease;
 }
 
-.overlay {
-  display: none;
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.multi-link {
-  position: relative;
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.multi-link .links {
-  position: absolute;
-  bottom: 15px;
-  left: 15px;
-  right: 15px;
-
-  display: flex;
-  gap: 10px;
-  z-index: 3;
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow: auto;
+    position: relative;
+    animation: slideUp 0.3s ease;
 }
 
-.multi-link .links a {
-  flex: 1;
-  text-align: center;
-  padding: 6px;
-  font-size: 12px;
-  background: rgba(255,255,255,0.9);
-  color: #064e3b;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-.multi-link .links a:hover {
-  background: white;
+.modal-image {
+    width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    display: block;
+}
+
+.modal-info {
+    padding: 2rem;
+    text-align: center;
+}
+
+.modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+}
+
+.modal-date {
+    color: var(--gray);
+    font-size: 0.95rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* === EMPTY STATE === */
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--gray);
+}
+
+.empty-state-emoji {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1rem;
+    }
+
+    .filter-container {
+        padding: 0 1rem;
+    }
+
+    .filter-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .modal-content {
+        max-width: 95%;
+    }
+
+    .modal-image {
+        max-height: 50vh;
+    }
+
+    .modal-info {
+        padding: 1.5rem;
+    }
 }
