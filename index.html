@@ -1,155 +1,259 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maintenance</title>
-
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-body{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:system-ui, sans-serif;
-  background:linear-gradient(135deg,#0ea5e9,#2563eb);
-  color:white;
-  text-align:center;
-  padding:20px;
-}
-
-.container{
-  background:rgba(255,255,255,0.1);
-  padding:30px;
-  border-radius:16px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-  max-width:400px;
-  width:100%;
-  animation:fadeIn 1s ease;
-}
-
-h1{
-  font-size:32px;
-  margin-bottom:10px;
-}
-
-p{
-  opacity:0.9;
-  margin-bottom:20px;
-}
-
-.loader{
-  width:60px;
-  height:60px;
-  border:5px solid rgba(255,255,255,0.3);
-  border-top:5px solid white;
-  border-radius:50%;
-  margin:20px auto;
-  animation:spin 1s linear infinite;
-}
-
-.countdown{
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  margin-top:20px;
-}
-
-.box{
-  background:rgba(255,255,255,0.15);
-  padding:12px;
-  border-radius:10px;
-  min-width:70px;
-}
-
-.number{
-  font-size:24px;
-  font-weight:bold;
-}
-
-.label{
-  font-size:12px;
-  opacity:0.8;
-}
-
-.footer{
-  margin-top:20px;
-  font-size:12px;
-  opacity:0.7;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg);}
-}
-
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dokumentasi dan kenangan kebersamaan kelas IX-C SMP Permata Bunda. Lihat momen seru, galeri foto, dan profil anggota kelas.">
+    <meta name="theme-color" content="#FF6B9D">
+    <title>IX-C SMP Permata Bunda - Kenangan Bersama</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
-
 <body>
 
-<div class="container">
-  <h1>🚧 Maintenance</h1>
-  <p>Website sedang dalam maintenance, tunggu ya...</p>
+    <header>
+        <nav>
+            <div class="logo">IX-C</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link active">🏠 Home</a></li>
+                <li><a href="galeri.html" class="nav-link">🖼️ Galeri</a></li>
+                <li><a href="tentang.html" class="nav-link">👥 Tentang</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <div class="loader"></div>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Kenangan <span>IX-C</span> SMP Permata Bunda</h1>
+            <p>Dokumentasi momen-momen berharga dan kebersamaan kita selama satu tahun ajaran. Dari kelas hingga petualangan bersama, semua kenangan ada di sini.</p>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">21</div>
+                    <div class="stat-label">Anggota Kelas</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">250+</div>
+                    <div class="stat-label">Foto Kenangan</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Kebersamaan</div>
+                </div>
+            </div>
 
-  <div class="countdown">
-    <div class="box">
-      <div id="hours" class="number">00</div>
-      <div class="label">Jam</div>
-    </div>
-    <div class="box">
-      <div id="minutes" class="number">00</div>
-      <div class="label">Menit</div>
-    </div>
-    <div class="box">
-      <div id="seconds" class="number">00</div>
-      <div class="label">Detik</div>
-    </div>
-  </div>
+            <div class="hero-buttons">
+                <a href="#gallery" class="btn btn-primary">Lihat Galeri</a>
+                <a href="#about" class="btn btn-secondary">Pelajari Lebih</a>
+            </div>
+        </div>
 
-  <div class="footer">Kami akan segera kembali 🚀</div>
-</div>
+        <div class="hero-images">
+            <div class="hero-image">
+                <img src="img/bulbasmainphoto.webp" alt="Kelas bersama">
+            </div>
+            <div class="hero-image">
+                <img src="img/agustusmainphoto.webp" alt="Teman-teman">
+            </div>
+            <div class="hero-image">
+                <img src="img/ultah1.webp" alt="Aktivitas kelas">
+            </div>
+            <div class="hero-image">
+                <img src="img/ultah2.webp" alt="Kenangan indah">
+            </div>
+        </div>
+    </section>
 
-<script>
-function updateCountdown(){
-  // Set target time ke jam 23:59:59 hari ini
-  const now = new Date();
-  const target = new Date();
-  target.setHours(00, 40, 00, 0);
+    <section class="gallery-preview" id="gallery">
+        <h2 class="section-title">Galeri Momen Seru</h2>
+        <p class="section-subtitle">Koleksi foto terbaik dari berbagai acara dan aktivitas kelas kami</p>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #FF6B9D, #FFB347); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+                  <img src="img/bulbasmainphoto.webp">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Perayaan Bulan Bahasa</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #6C5CE7, #FF6B9D); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+                <img src="img/agustusmainphoto.webp">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Perayaan Kemerdekaan RI</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #FFB347, #FF6B9D); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+                  <img src="img/ultah1.webp">
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Merayakan Ultah Wali Kelas</div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #FF6B9D, #6C5CE7); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+                  <img src="img/kasihmainphoto.webp"
+                </div>
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-text">Kamis Bersih(KASIH)</div>
+                </div>
+            </div>
+        </div>
 
-  const diff = target - now;
+        <div class="gallery-cta">
+            <a href="galeri.html" class="btn btn-primary">Buka Galeri Lengkap</a>
+        </div>
+    </section>
 
-  if(diff <= 0){
-    document.querySelector(".countdown").innerHTML = "<div style='font-size: 18px;'>Segera online! 🚀</div>";
-    return;
-  }
+    <section class="members" id="members">
+        <h2 class="section-title">Struktural Inti IX-C</h2>
+        <p class="section-subtitle" style="margin-bottom: 2rem;"></p>
+        
+        <div class="members-grid">
+            <div class="member-card">
+                <div class="member-avatar">AR</div>
+                <div class="member-name">Anggi Rahayu</div>
+                <div class="member-role">Wali Kelas</div>
+            </div>
+            <div class="member-card">
+                <div class="member-avatar">BVP</div>
+                <div class="member-name">Bintang Very Purwanto</div>
+                <div class="member-role">Ketua Kelas</div>
+            </div>
+            <div class="member-card">
+                <div class="member-avatar">SAS</div>
+                <div class="member-name">Shiva Anika Setiawan</div>
+                <div class="member-role">Wakil Ketua</div>
+            </div>
+            <div class="member-card">
+                <div class="member-avatar">AV</div>
+                <div class="member-name">Agnes Vanessia</div>
+                <div class="member-role">Sekretaris</div>
+            </div>
+            <div class="member-card">
+                <div class="member-avatar">ZMJ</div>
+                <div class="member-name">Zeny Margosha Jelena</div>
+                <div class="member-role">Bendahara</div>
+            </div>
+        </div>
+    </section>
 
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
+    <section class="agenda" id="agenda">
+        <div class="agenda-container">
+            <h2 class="section-title">📅 Agenda Kami</h2>
+            <p class="section-subtitle">Rencana kegiatan dan acara penting kelas IX-C</p>
+            
+            <div class="agenda-grid">
+                <div class="agenda-item">
+                    <div class="agenda-date">12 Jun</div>
+                    <div class="agenda-content">
+                        <h3>Ulangan Tengah Semester</h3>
+                        <p>Ujian untuk semua mata pelajaran</p>
+                    </div>
+                </div>
 
-  document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-  document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-  document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-}
+                <div class="agenda-item">
+                    <div class="agenda-date">20 Jun</div>
+                    <div class="agenda-content">
+                        <h3>Outing Kelas</h3>
+                        <p>Kegiatan tahunan di alam terbuka</p>
+                    </div>
+                </div>
 
-setInterval(updateCountdown, 1000);
+                <div class="agenda-item">
+                    <div class="agenda-date">01 Jul</div>
+                    <div class="agenda-content">
+                        <h3>Persiapan Ujian Akhir</h3>
+                        <p>Belajar bersama intensif</p>
+                    </div>
+                </div>
 
-updateCountdown();
-</script>
+                <div class="agenda-item">
+                    <div class="agenda-date">15 Jul</div>
+                    <div class="agenda-content">
+                        <h3>Ujian Akhir Semester</h3>
+                        <p>Evaluasi akhir tahun akademik</p>
+                    </div>
+                </div>
 
+                <div class="agenda-item">
+                    <div class="agenda-date">25 Jul</div>
+                    <div class="agenda-content">
+                        <h3>Pengumuman Kelulusan</h3>
+                        <p>Momen spesial bagi kelas IX-C</p>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-date">30 Jul</div>
+                    <div class="agenda-content">
+                        <h3>Wisuda & Apresiasi</h3>
+                        <p>Perayaan akhir tahun bersama</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION (PREVIEW) -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2>Tentang <span>IX-C</span></h2>
+            <p>Kelas IX-C SMP Permata Bunda adalah keluarga besar yang terdiri dari 32 siswa luar biasa. Kami telah bersama melalui berbagai pengalaman, tantangan, dan kebahagiaan selama satu tahun ajaran ini.</p>
+            <p>Website ini adalah wujud nyata dari komitmen kami untuk menjaga kenangan indah bersama. Setiap foto, momen, dan cerita di sini adalah bukti ikatan persahabatan yang kuat.</p>
+            
+            <ul class="about-list">
+                <li>Dokumentasi lengkap aktivitas kelas</li>
+                <li>Galeri foto dari berbagai acara</li>
+                <li>Profil dan biodata anggota kelas</li>
+                <li>Tempat berbagi kenangan berharga</li>
+            </ul>
+
+            <div style="margin-top: 2rem;">
+                <a href="tentang.html" class="btn btn-primary">Pelajari Lebih Lanjut</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>IX-C SMP PB</h3>
+                <p>Dokumentasi dan kenangan kebersamaan kelas IX-C SMP Permata Bunda. Setiap momen adalah cerita yang berharga.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Menu</h3>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#gallery">Galeri</a>
+                    <a href="#members">Anggota</a>
+                    <a href="#about">Tentang</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Hubungi Kami</h3>
+                <div class="footer-links">
+                    <a href="https://www.instagram.com/9c.permatabunda" target="_blank">📱 Instagram</a>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/9c.permatabunda" class="social-link" target="_blank">📱</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 IX-C SMP Permata Bunda. All Rights Reserved. | Made with 🤍 by Bin & Teman-Teman</p>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
 </body>
 </html>
