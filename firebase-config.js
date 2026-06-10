@@ -7,7 +7,7 @@ const firebaseConfig = {
     authDomain: "ixcpb-26d18.firebaseapp.com",
     projectId: "ixcpb-26d18",
     messagingSenderId: "416132545026",
-    appId: "1:416132545026:web:82e2becb127421db60451b"
+    appId: "1:416132545026:web:82e2becb127421db60451b",
     measurementId: "G-KJ6Z1LFKLX"
 };
 
