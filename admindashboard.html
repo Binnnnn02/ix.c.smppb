@@ -341,7 +341,7 @@
 
         <button class="nav-item active" data-panel="galeri">🖼️ Galeri</button>
         <button class="nav-item" data-panel="agenda">📅 Agenda</button>
-        <a href="galeri.html" class="nav-item" target="_blank">🌐 Lihat Website</a>
+        <a href="/galeri" class="nav-item" target="_blank">🌐 Lihat Website</a>
 
         <div class="sidebar-spacer"></div>
         <button class="btn-logout" id="btnLogout">🚪 Keluar</button>
@@ -514,7 +514,7 @@ import {
 // ── Auth guard ────────────────────────────────────────────────────
 onAuthStateChanged(auth, user => {
     if (!user) {
-        window.location.href = 'admin.html';
+        window.location.href = '/admin';
         return;
     }
     document.getElementById('adminEmail').textContent = user.email;
@@ -524,7 +524,7 @@ onAuthStateChanged(auth, user => {
 
 document.getElementById('btnLogout').addEventListener('click', async () => {
     await signOut(auth);
-    window.location.href = 'admin.html';
+    window.location.href = '/admin';
 });
 
 // ── Toast ─────────────────────────────────────────────────────────
