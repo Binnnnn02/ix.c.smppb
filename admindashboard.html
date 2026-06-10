@@ -196,24 +196,19 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-    
+// ── GANTI DENGAN CONFIG FIREBASE KAMU ──
 const firebaseConfig = {
-    apiKey: "AIzaSyAiQExK8VQTmBfhtCUnd4e2BnOoWaKk3hA",
-    authDomain: "ixcpb-26d18.firebaseapp.com",
-    projectId: "ixcpb-26d18",
-    messagingSenderId: "416132545026",
-    appId: "1:416132545026:web:82e2becb127421db60451b"
+    apiKey:            "GANTI_API_KEY",
+    authDomain:        "GANTI.firebaseapp.com",
+    projectId:         "GANTI_PROJECT_ID",
+    messagingSenderId: "GANTI_SENDER_ID",
+    appId:             "GANTI_APP_ID"
 };
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db   = firebase.firestore();
 alert('Firebase OK');
-
-// ── Button event listeners ────────────────────────────────────────
-document.getElementById('btnAddGallery').addEventListener('click', addGallery);
-document.getElementById('btnAddAgenda').addEventListener('click', addAgenda);
-alert('Buttons OK');
 
 // ── Auth guard ────────────────────────────────────────────────────
 auth.onAuthStateChanged(user => {
@@ -376,4 +371,8 @@ function addAgenda() {
 
     db.collection('agenda').add({
         title, date: dateDisplay, dateRaw: dateVal,
-      
+        desc: desc || '', emoji, category,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+        toast('Agenda berhasil ditambahkan! ✅');
+        ['a-title','a-date','a-desc','a-emoji'].forEach(id => document.getEle
