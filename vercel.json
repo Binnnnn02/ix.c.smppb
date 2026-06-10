@@ -1,9 +1,10 @@
 {
-  "rewrites": [ 
+  "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/galeri", "destination": "/galeri.html" },
     { "source": "/info", "destination": "/info.html" },
-    { "source": "/tentang", "destination": "/tentang.html" }
-    { "source": "/admin", "destination": "/admin.html" }
+    { "source": "/tentang", "destination": "/tentang.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/admin-dashboard", "destination": "/admin-dashboard.html" }
   ]
 }
