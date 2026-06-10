@@ -165,48 +165,24 @@
 
         textarea { resize: vertical; min-height: 80px; }
 
-        /* Image upload area */
-        .upload-area {
-            border: 2px dashed var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: border-color 0.2s, background 0.2s;
-            background: #fafafa;
-            position: relative;
+        /* Image URL preview */
+        .img-preview-wrap {
+            margin-top: 0.8rem;
+            display: none;
         }
 
-        .upload-area:hover, .upload-area.dragover { border-color: var(--primary); background: #fff5f8; }
-
-        .upload-area input[type="file"] {
-            position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-        }
-
-        .upload-preview {
+        .img-preview-wrap img {
             width: 100%;
             aspect-ratio: 16/9;
             object-fit: cover;
-            border-radius: 8px;
-            margin-top: 0.8rem;
-            display: none;
+            border-radius: 10px;
+            border: 2px solid var(--border);
         }
 
-        .upload-progress {
-            margin-top: 0.8rem;
-            height: 6px;
-            background: #f0f0f0;
-            border-radius: 3px;
-            overflow: hidden;
-            display: none;
-        }
-
-        .upload-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), #b06cff);
-            border-radius: 3px;
-            transition: width 0.3s;
-            width: 0%;
+        .img-url-hint {
+            font-size: 0.78rem;
+            color: var(--gray);
+            margin-top: 0.4rem;
         }
 
         /* Buttons */
@@ -341,7 +317,7 @@
 
         <button class="nav-item active" data-panel="galeri">🖼️ Galeri</button>
         <button class="nav-item" data-panel="agenda">📅 Agenda</button>
-        <a href="/galeri" class="nav-item" target="_blank">🌐 Lihat Website</a>
+        <a href="galeri.html" class="nav-item" target="_blank">🌐 Lihat Website</a>
 
         <div class="sidebar-spacer"></div>
         <button class="btn-logout" id="btnLogout">🚪 Keluar</button>
@@ -393,18 +369,13 @@
                 </div>
 
                 <div class="field">
-                    <label>Upload Foto (landscape, maks 5 MB)</label>
-                    <div class="upload-area" id="uploadArea">
-                        <input type="file" id="g-file" accept="image/*">
-                        <div id="uploadPrompt">
-                            <div style="font-size:2rem;margin-bottom:0.5rem">📸</div>
-                            <div style="font-weight:600;margin-bottom:0.3rem">Klik atau drag & drop foto di sini</div>
-                            <div style="font-size:0.8rem;color:var(--gray)">JPG, PNG, WEBP — maks 5 MB</div>
-                        </div>
-                        <img id="uploadPreview" class="upload-preview" alt="Preview">
-                        <div class="upload-progress" id="uploadProgress">
-                            <div class="upload-progress-bar" id="uploadProgressBar"></div>
-                        </div>
+                    <label>URL Foto (opsional)</label>
+                    <input type="url" id="g-imageurl" placeholder="https://drive.google.com/uc?id=... atau link gambar lain">
+                    <div class="img-url-hint">
+                        💡 Cara dapat URL foto dari Google Drive: klik kanan foto → <strong>Bagikan</strong> → salin link → ubah <code>open?id=XXX</code> jadi <code>uc?id=XXX</code>
+                    </div>
+                    <div class="img-preview-wrap" id="imgPreviewWrap">
+                        <img id="imgPreview" alt="Preview foto">
                     </div>
                 </div>
 
@@ -501,20 +472,17 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { auth, db, storage } from './firebase-config.js';
+import { auth, db } from './firebase-config.js';
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
     collection, addDoc, getDocs, deleteDoc, doc,
     query, orderBy, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import {
-    ref, uploadBytesResumable, getDownloadURL, deleteObject
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 // ── Auth guard ────────────────────────────────────────────────────
 onAuthStateChanged(auth, user => {
     if (!user) {
-        window.location.href = '/admin';
+        window.location.href = 'admin.html';
         return;
     }
     document.getElementById('adminEmail').textContent = user.email;
@@ -524,7 +492,7 @@ onAuthStateChanged(auth, user => {
 
 document.getElementById('btnLogout').addEventListener('click', async () => {
     await signOut(auth);
-    window.location.href = '/admin';
+    window.location.href = 'admin.html';
 });
 
 // ── Toast ─────────────────────────────────────────────────────────
@@ -576,13 +544,40 @@ function isValidDriveUrl(url) {
 // GALLERY
 // ═══════════════════════════════════════════════════════════════════
 
-// Image preview
-const fileInput   = document.getElementById('g-file');
-const preview     = document.getElementById('uploadPreview');
-const uploadPrompt = document.getElementById('uploadPrompt');
+// ── Konversi Google Drive share link → direct image URL ──────────
+function toDriveDirectUrl(url) {
+    if (!url) return '';
+    const matchFile = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (matchFile) return `https://drive.google.com/uc?export=view&id=${matchFile[1]}`;
+    const matchOpen = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (matchOpen) return `https://drive.google.com/uc?export=view&id=${matchOpen[1]}`;
+    return url;
+}
 
-fileInput.addEventListener('change', () => {
-    const file = fileInput.files[0];
-    if (!file) return;
-    if (file.size > 5 * 1024 * 1024) { toast('Ukuran file maksimal 5 MB', 'error'); fileInput.value = ''; return; }
-    const url = URL.createOb
+// ── Image URL preview ─────────────────────────────────────────────
+const imgUrlInput    = document.getElementById('g-imageurl');
+const imgPreview     = document.getElementById('imgPreview');
+const imgPreviewWrap = document.getElementById('imgPreviewWrap');
+
+imgUrlInput.addEventListener('input', () => {
+    const raw = imgUrlInput.value.trim();
+    if (raw) {
+        const direct = toDriveDirectUrl(raw);
+        imgPreview.src = direct;
+        imgPreviewWrap.style.display = 'block';
+        imgPreview.onerror = () => { imgPreviewWrap.style.display = 'none'; };
+        imgPreview.onload  = () => { imgPreviewWrap.style.display = 'block'; };
+    } else {
+        imgPreviewWrap.style.display = 'none';
+    }
+});
+
+// Add gallery item
+document.getElementById('btnAddGallery').addEventListener('click', async () => {
+    const title    = document.getElementById('g-title').value.trim();
+    const category = document.getElementById('g-category').value;
+    const dateVal  = document.getElementById('g-date').value;
+    const driveUrl = document.getElementById('g-drive').value.trim();
+    const imageUrl = document.getElementById('g-imageurl').value.trim();
+
+    if (!title || !category || !dateVal) { toast('Judul, kategori, dan tanggal wajib diisi.', 'error'); re
