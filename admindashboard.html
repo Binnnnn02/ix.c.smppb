@@ -9,337 +9,87 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --primary: #FF6B9D;
-            --dark: #2d2d2d;
-            --gray: #888;
-            --bg: #f8f9fc;
-            --card: #ffffff;
-            --border: #ebebeb;
-            --danger: #e53935;
-        }
-
+        :root { --primary: #FF6B9D; --dark: #2d2d2d; --gray: #888; --bg: #f8f9fc; --card: #fff; --border: #ebebeb; --danger: #e53935; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--dark); min-height: 100vh; }
-
-        /* ── Sidebar ── */
         .layout { display: flex; min-height: 100vh; }
-
-        .sidebar {
-            width: 240px;
-            background: white;
-            border-right: 1px solid var(--border);
-            padding: 2rem 1.2rem;
-            position: fixed;
-            top: 0; left: 0; bottom: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-            z-index: 100;
-        }
-
-        .sidebar-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            color: var(--dark);
-            margin-bottom: 1.8rem;
-            padding-left: 0.5rem;
-        }
-
-        .sidebar-logo span {
-            background: linear-gradient(135deg, var(--primary), #b06cff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--gray);
-            transition: all 0.2s;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-            text-decoration: none;
-        }
-
+        .sidebar { width: 240px; background: white; border-right: 1px solid var(--border); padding: 2rem 1.2rem; position: fixed; top: 0; left: 0; bottom: 0; display: flex; flex-direction: column; gap: 0.4rem; z-index: 100; transition: transform 0.3s; }
+        .sidebar-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--dark); margin-bottom: 1.8rem; padding-left: 0.5rem; }
+        .sidebar-logo span { background: linear-gradient(135deg, var(--primary), #b06cff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.75rem 1rem; border-radius: 12px; cursor: pointer; font-size: 0.9rem; font-weight: 500; color: var(--gray); transition: all 0.2s; border: none; background: none; width: 100%; text-align: left; text-decoration: none; }
         .nav-item:hover { background: #fdf0f5; color: var(--primary); }
         .nav-item.active { background: linear-gradient(135deg, #fff0f6, #f5f0ff); color: var(--primary); font-weight: 700; }
-
         .sidebar-spacer { flex: 1; }
-
-        .btn-logout {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--danger);
-            border: 1px solid #ffcdd2;
-            background: white;
-            width: 100%;
-            transition: all 0.2s;
-        }
-
+        .btn-logout { display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem 1rem; border-radius: 12px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--danger); border: 1px solid #ffcdd2; background: white; width: 100%; transition: all 0.2s; }
         .btn-logout:hover { background: #ffebee; }
-
-        /* ── Main ── */
         .main { margin-left: 240px; padding: 2rem 2.5rem; flex: 1; }
-
-        .topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-        }
-
+        .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
         .topbar h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; }
-
-        /* ── Panels ── */
         .panel { display: none; }
         .panel.active { display: block; }
-
-        /* ── Cards ── */
-        .card {
-            background: var(--card);
-            border-radius: 16px;
-            padding: 1.8rem;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-            margin-bottom: 1.5rem;
-        }
-
-        .card h3 {
-            font-size: 1.05rem;
-            margin-bottom: 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* ── Form fields ── */
+        .card { background: var(--card); border-radius: 16px; padding: 1.8rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
+        .card h3 { font-size: 1.05rem; margin-bottom: 1.4rem; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
-
         .field { margin-bottom: 1rem; }
-
-        label {
-            display: block;
-            font-size: 0.82rem;
-            font-weight: 600;
-            margin-bottom: 0.35rem;
-            color: #555;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        input[type="url"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            color: var(--dark);
-            outline: none;
-            transition: border-color 0.2s;
-            background: white;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(255,107,157,0.1);
-        }
-
+        label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem; color: #555; }
+        input[type="text"], input[type="date"], input[type="url"], select, textarea { width: 100%; padding: 0.75rem 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; color: var(--dark); outline: none; transition: border-color 0.2s; background: white; }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(255,107,157,0.1); }
         textarea { resize: vertical; min-height: 80px; }
-
-        /* Image URL preview */
-        .img-preview-wrap {
-            margin-top: 0.8rem;
-            display: none;
-        }
-
-        .img-preview-wrap img {
-            width: 100%;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid var(--border);
-        }
-
-        .img-url-hint {
-            font-size: 0.78rem;
-            color: var(--gray);
-            margin-top: 0.4rem;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 0.75rem 1.6rem;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), #b06cff);
-            color: white;
-        }
-
+        .img-preview-wrap { margin-top: 0.8rem; display: none; }
+        .img-preview-wrap img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; border: 2px solid var(--border); }
+        .img-url-hint { font-size: 0.78rem; color: var(--gray); margin-top: 0.4rem; }
+        .btn { padding: 0.75rem 1.6rem; border-radius: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; transition: all 0.2s; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), #b06cff); color: white; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,157,0.35); }
         .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
         .btn-danger { background: #ffebee; color: var(--danger); }
         .btn-danger:hover { background: #ffcdd2; }
-
-        /* Table */
         .table-wrap { overflow-x: auto; }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.88rem;
-        }
-
-        th {
-            text-align: left;
-            padding: 0.7rem 1rem;
-            background: #fafafa;
-            font-weight: 700;
-            color: #555;
-            font-size: 0.78rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 1px solid var(--border);
-        }
-
-        td {
-            padding: 0.85rem 1rem;
-            border-bottom: 1px solid var(--border);
-            vertical-align: middle;
-        }
-
+        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        th { text-align: left; padding: 0.7rem 1rem; background: #fafafa; font-weight: 700; color: #555; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
+        td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: #fdf5f8; }
-
-        .thumb {
-            width: 64px;
-            height: 40px;
-            object-fit: cover;
-            border-radius: 6px;
-            background: #f0f0f0;
-        }
-
-        .emoji-thumb {
-            width: 64px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            border-radius: 6px;
-        }
-
-        .badge-cat {
-            display: inline-block;
-            padding: 0.2rem 0.7rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            background: #ffeaf4;
-            color: var(--primary);
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: #2d2d2d;
-            color: white;
-            padding: 0.9rem 1.5rem;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-            z-index: 9999;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: all 0.3s;
-            pointer-events: none;
-        }
-
+        .thumb { width: 64px; height: 40px; object-fit: cover; border-radius: 6px; }
+        .emoji-thumb { width: 64px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border-radius: 6px; background: #ffeaf4; }
+        .badge-cat { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; background: #ffeaf4; color: var(--primary); }
+        .toast { position: fixed; bottom: 2rem; right: 2rem; background: #2d2d2d; color: white; padding: 0.9rem 1.5rem; border-radius: 12px; font-size: 0.9rem; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.25); z-index: 9999; opacity: 0; transform: translateY(12px); transition: all 0.3s; pointer-events: none; }
         .toast.show { opacity: 1; transform: translateY(0); }
         .toast.success { background: #2e7d32; }
-        .toast.error   { background: var(--danger); }
-
-        /* Mobile sidebar toggle */
-        .menu-toggle {
-            display: none;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 0.5rem 0.75rem;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
+        .toast.error { background: var(--danger); }
+        .menu-toggle { display: none; background: white; border: 1px solid var(--border); border-radius: 10px; padding: 0.5rem 0.75rem; cursor: pointer; font-size: 1.2rem; }
         @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+            .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
             .main { margin-left: 0; padding: 1.5rem 1rem; }
             .menu-toggle { display: block; }
+            .form-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="layout">
-    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">IX-C <span>Admin</span></div>
-
-        <button class="nav-item active" data-panel="galeri">🖼️ Galeri</button>
-        <button class="nav-item" data-panel="agenda">📅 Agenda</button>
-        <a href="galeri.html" class="nav-item" target="_blank">🌐 Lihat Website</a>
-
+        <button class="nav-item active" onclick="switchPanel('galeri', this)">🖼️ Galeri</button>
+        <button class="nav-item" onclick="switchPanel('agenda', this)">📅 Agenda</button>
+        <a href="/galeri" class="nav-item" target="_blank">🌐 Lihat Website</a>
         <div class="sidebar-spacer"></div>
-        <button class="btn-logout" id="btnLogout">🚪 Keluar</button>
+        <button class="btn-logout" onclick="doLogout()">🚪 Keluar</button>
     </aside>
 
-    <!-- Main -->
     <main class="main">
         <div class="topbar">
             <div style="display:flex;align-items:center;gap:1rem">
-                <button class="menu-toggle" id="menuToggle">☰</button>
+                <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
                 <h2 id="panelTitle">Kelola Galeri</h2>
             </div>
             <span id="adminEmail" style="font-size:0.82rem;color:var(--gray)"></span>
         </div>
 
-        <!-- ── PANEL: Galeri ── -->
         <div class="panel active" id="panel-galeri">
-
-            <!-- Add form -->
             <div class="card">
                 <h3>➕ Tambah Foto Galeri</h3>
-
                 <div class="form-row">
                     <div class="field">
                         <label>Judul Foto *</label>
@@ -356,7 +106,6 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="form-row">
                     <div class="field">
                         <label>Tanggal *</label>
@@ -367,50 +116,31 @@
                         <input type="url" id="g-drive" placeholder="https://drive.google.com/...">
                     </div>
                 </div>
-
                 <div class="field">
                     <label>URL Foto (opsional)</label>
-                    <input type="url" id="g-imageurl" placeholder="https://drive.google.com/uc?id=... atau link gambar lain">
-                    <div class="img-url-hint">
-                        💡 Cara dapat URL foto dari Google Drive: klik kanan foto → <strong>Bagikan</strong> → salin link → ubah <code>open?id=XXX</code> jadi <code>uc?id=XXX</code>
-                    </div>
+                    <input type="url" id="g-imageurl" placeholder="https://drive.google.com/file/d/..." oninput="previewImg(this.value)">
+                    <div class="img-url-hint">💡 Paste link foto dari Google Drive, langsung otomatis dikonversi</div>
                     <div class="img-preview-wrap" id="imgPreviewWrap">
                         <img id="imgPreview" alt="Preview foto">
                     </div>
                 </div>
-
-                <button class="btn btn-primary" id="btnAddGallery">Simpan Foto</button>
+                <button class="btn btn-primary" onclick="addGallery()">Simpan Foto</button>
             </div>
 
-            <!-- List -->
             <div class="card">
                 <h3>🗂️ Daftar Foto</h3>
                 <div class="table-wrap">
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Foto</th>
-                                <th>Judul</th>
-                                <th>Kategori</th>
-                                <th>Tanggal</th>
-                                <th>Drive</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="galleryTableBody">
-                            <tr><td colspan="6" style="text-align:center;color:var(--gray);padding:2rem">Memuat data...</td></tr>
-                        </tbody>
+                        <thead><tr><th>Foto</th><th>Judul</th><th>Kategori</th><th>Tanggal</th><th>Drive</th><th>Aksi</th></tr></thead>
+                        <tbody id="galleryTableBody"><tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray)">Memuat...</td></tr></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- ── PANEL: Agenda ── -->
         <div class="panel" id="panel-agenda">
-
             <div class="card">
                 <h3>➕ Tambah Agenda</h3>
-
                 <div class="form-row">
                     <div class="field">
                         <label>Judul Agenda *</label>
@@ -421,12 +151,10 @@
                         <input type="date" id="a-date">
                     </div>
                 </div>
-
                 <div class="field">
                     <label>Keterangan</label>
                     <textarea id="a-desc" placeholder="Deskripsi singkat agenda..."></textarea>
                 </div>
-
                 <div class="form-row">
                     <div class="field">
                         <label>Emoji (opsional)</label>
@@ -442,26 +170,15 @@
                         </select>
                     </div>
                 </div>
-
-                <button class="btn btn-primary" id="btnAddAgenda">Simpan Agenda</button>
+                <button class="btn btn-primary" onclick="addAgenda()">Simpan Agenda</button>
             </div>
 
             <div class="card">
                 <h3>📋 Daftar Agenda</h3>
                 <div class="table-wrap">
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Emoji</th>
-                                <th>Judul</th>
-                                <th>Tanggal</th>
-                                <th>Kategori</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="agendaTableBody">
-                            <tr><td colspan="5" style="text-align:center;color:var(--gray);padding:2rem">Memuat data...</td></tr>
-                        </tbody>
+                        <thead><tr><th>Emoji</th><th>Judul</th><th>Tanggal</th><th>Kategori</th><th>Aksi</th></tr></thead>
+                        <tbody id="agendaTableBody"><tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--gray)">Memuat...</td></tr></tbody>
                     </table>
                 </div>
             </div>
@@ -471,115 +188,191 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-<script>eruda.init();</script>
-<script type="module">
-import { auth, db } from '/firebase-config.js';
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import {
-    collection, addDoc, getDocs, deleteDoc, doc,
-    query, orderBy, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<!-- Firebase CDN (compat version — no module needed) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+// ── GANTI DENGAN CONFIG FIREBASE KAMU ──
+const firebaseConfig = {
+    apiKey: "AIzaSyAiQExK8VQTmBfhtCUnd4e2BnOoWaKk3hA",
+    authDomain: "ixcpb-26d18.firebaseapp.com",
+    projectId: "ixcpb-26d18",
+    messagingSenderId: "416132545026",
+    appId: "1:416132545026:web:82e2becb127421db60451b"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db   = firebase.firestore();
 
 // ── Auth guard ────────────────────────────────────────────────────
-onAuthStateChanged(auth, user => {
-    if (!user) {
-        window.location.href = '/admin';
-        return;
-    }
+auth.onAuthStateChanged(user => {
+    if (!user) { window.location.href = '/admin'; return; }
     document.getElementById('adminEmail').textContent = user.email;
     loadGallery();
     loadAgenda();
 });
 
-document.getElementById('btnLogout').addEventListener('click', async () => {
-    await signOut(auth);
-    window.location.href = '/admin';
-});
+function doLogout() {
+    auth.signOut().then(() => window.location.href = '/admin');
+}
 
 // ── Toast ─────────────────────────────────────────────────────────
 function toast(msg, type = 'success') {
     const el = document.getElementById('toast');
     el.textContent = msg;
-    el.className = `toast ${type} show`;
+    el.className = 'toast ' + type + ' show';
     setTimeout(() => el.classList.remove('show'), 3000);
 }
 
-// ── Sidebar nav ───────────────────────────────────────────────────
-const navItems = document.querySelectorAll('.nav-item[data-panel]');
-const panelTitle = document.getElementById('panelTitle');
-const titles = { galeri: 'Kelola Galeri', agenda: 'Kelola Agenda' };
+// ── Panel switch ──────────────────────────────────────────────────
+function switchPanel(name, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    document.querySelectorAll('.nav-item[onclick]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panelTitle').textContent = name === 'galeri' ? 'Kelola Galeri' : 'Kelola Agenda';
+}
 
-navItems.forEach(btn => {
-    btn.addEventListener('click', () => {
-        navItems.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const p = btn.dataset.panel;
-        document.querySelectorAll('.panel').forEach(el => el.classList.remove('active'));
-        document.getElementById(`panel-${p}`).classList.add('active');
-        panelTitle.textContent = titles[p] || p;
-    });
-});
-
-// Mobile sidebar
-document.getElementById('menuToggle').addEventListener('click', () => {
-    document.getElementById('sidebar').classList.toggle('open');
-});
-
-// ── Sanitize (XSS prevention on output) ──────────────────────────
-function esc(str = '') {
+// ── Sanitize ──────────────────────────────────────────────────────
+function esc(str) {
     const d = document.createElement('div');
-    d.textContent = String(str);
+    d.textContent = String(str || '');
     return d.innerHTML;
 }
 
-// ── Validate Google Drive URL ─────────────────────────────────────
-function isValidDriveUrl(url) {
-    if (!url) return true; // optional field
-    try {
-        const u = new URL(url);
-        return ['drive.google.com', 'docs.google.com'].includes(u.hostname);
-    } catch { return false; }
+// ── Drive URL converter ───────────────────────────────────────────
+function toDriveDirectUrl(url) {
+    if (!url) return '';
+    const m1 = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (m1) return 'https://drive.google.com/uc?export=view&id=' + m1[1];
+    const m2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (m2) return 'https://drive.google.com/uc?export=view&id=' + m2[1];
+    return url;
+}
+
+// ── Image preview ─────────────────────────────────────────────────
+function previewImg(raw) {
+    const wrap = document.getElementById('imgPreviewWrap');
+    const img  = document.getElementById('imgPreview');
+    if (!raw) { wrap.style.display = 'none'; return; }
+    const url = toDriveDirectUrl(raw);
+    img.src = url;
+    wrap.style.display = 'block';
+    img.onerror = () => wrap.style.display = 'none';
+    img.onload  = () => wrap.style.display = 'block';
 }
 
 // ═══════════════════════════════════════════════════════════════════
 // GALLERY
 // ═══════════════════════════════════════════════════════════════════
 
-// ── Konversi Google Drive share link → direct image URL ──────────
-function toDriveDirectUrl(url) {
-    if (!url) return '';
-    const matchFile = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-    if (matchFile) return `https://drive.google.com/uc?export=view&id=${matchFile[1]}`;
-    const matchOpen = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    if (matchOpen) return `https://drive.google.com/uc?export=view&id=${matchOpen[1]}`;
-    return url;
-}
-
-// ── Image URL preview ─────────────────────────────────────────────
-const imgUrlInput    = document.getElementById('g-imageurl');
-const imgPreview     = document.getElementById('imgPreview');
-const imgPreviewWrap = document.getElementById('imgPreviewWrap');
-
-imgUrlInput.addEventListener('input', () => {
-    const raw = imgUrlInput.value.trim();
-    if (raw) {
-        const direct = toDriveDirectUrl(raw);
-        imgPreview.src = direct;
-        imgPreviewWrap.style.display = 'block';
-        imgPreview.onerror = () => { imgPreviewWrap.style.display = 'none'; };
-        imgPreview.onload  = () => { imgPreviewWrap.style.display = 'block'; };
-    } else {
-        imgPreviewWrap.style.display = 'none';
-    }
-});
-
-// Add gallery item
-document.getElementById('btnAddGallery').addEventListener('click', async () => {
+function addGallery() {
     const title    = document.getElementById('g-title').value.trim();
     const category = document.getElementById('g-category').value;
     const dateVal  = document.getElementById('g-date').value;
     const driveUrl = document.getElementById('g-drive').value.trim();
     const imageUrl = document.getElementById('g-imageurl').value.trim();
 
-    if (!title || !catego
+    if (!title || !category || !dateVal) {
+        toast('Judul, kategori, dan tanggal wajib diisi.', 'error');
+        return;
+    }
+
+    const btn = document.querySelector('#panel-galeri .btn-primary');
+    btn.disabled = true;
+    btn.textContent = 'Menyimpan...';
+
+    const dateDisplay = new Date(dateVal).toLocaleDateString('id-ID', {
+        day: '2-digit', month: 'short', year: 'numeric'
+    });
+
+    db.collection('galeri').add({
+        title,
+        category,
+        date: dateDisplay,
+        dateRaw: dateVal,
+        driveUrl: driveUrl || '',
+        imageUrl: imageUrl ? toDriveDirectUrl(imageUrl) : '',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+        toast('Foto berhasil ditambahkan! ✅');
+        ['g-title','g-category','g-date','g-drive','g-imageurl'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('imgPreviewWrap').style.display = 'none';
+        loadGallery();
+    }).catch(err => {
+        console.error(err);
+        toast('Gagal: ' + err.message, 'error');
+    }).finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Simpan Foto';
+    });
+}
+
+function loadGallery() {
+    const tbody = document.getElementById('galleryTableBody');
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray)">Memuat...</td></tr>';
+
+    db.collection('galeri').orderBy('createdAt', 'desc').get().then(snap => {
+        if (snap.empty) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray)">Belum ada foto</td></tr>';
+            return;
+        }
+        tbody.innerHTML = '';
+        snap.forEach(doc => {
+            const d = doc.data();
+            const tr = document.createElement('tr');
+            tr.innerHTML =
+                '<td>' + (d.imageUrl ? '<img class="thumb" src="' + esc(d.imageUrl) + '">' : '<div class="emoji-thumb">🖼️</div>') + '</td>' +
+                '<td>' + esc(d.title) + '</td>' +
+                '<td><span class="badge-cat">' + esc(d.category) + '</span></td>' +
+                '<td>' + esc(d.date) + '</td>' +
+                '<td>' + (d.driveUrl ? '<a href="' + esc(d.driveUrl) + '" target="_blank" style="color:#1a73e8;font-size:0.82rem">Buka ↗</a>' : '—') + '</td>' +
+                '<td><button class="btn btn-danger" onclick="deleteGallery(\'' + doc.id + '\')">🗑️ Hapus</button></td>';
+            tbody.appendChild(tr);
+        });
+    }).catch(err => {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:red;padding:2rem">' + err.message + '</td></tr>';
+    });
+}
+
+function deleteGallery(id) {
+    if (!confirm('Hapus foto ini?')) return;
+    db.collection('galeri').doc(id).delete()
+        .then(() => { toast('Foto dihapus.'); loadGallery(); })
+        .catch(err => toast('Gagal: ' + err.message, 'error'));
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// AGENDA
+// ═══════════════════════════════════════════════════════════════════
+
+function addAgenda() {
+    const title    = document.getElementById('a-title').value.trim();
+    const dateVal  = document.getElementById('a-date').value;
+    const desc     = document.getElementById('a-desc').value.trim();
+    const emoji    = document.getElementById('a-emoji').value.trim() || '📌';
+    const category = document.getElementById('a-category').value;
+
+    if (!title || !dateVal) { toast('Judul dan tanggal wajib diisi.', 'error'); return; }
+
+    const btn = document.querySelector('#panel-agenda .btn-primary');
+    btn.disabled = true;
+    btn.textContent = 'Menyimpan...';
+
+    const dateDisplay = new Date(dateVal).toLocaleDateString('id-ID', {
+        day: '2-digit', month: 'short', year: 'numeric'
+    });
+
+    db.collection('agenda').add({
+        title, date: dateDisplay, dateRaw: dateVal,
+        desc: desc || '', emoji, category,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+        toast('Agenda berhasil ditambahkan! ✅');
+        ['a-title','a-date','a-desc','a-emoji'].forEach(id => document.getElementById(id).value = '');
+        loadAgenda();
+    }).catch(err => {
+        toast('Gagal: ' + err.mess
