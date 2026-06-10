@@ -5,6 +5,6 @@
     { "source": "/info", "destination": "/info.html" },
     { "source": "/tentang", "destination": "/tentang.html" },
     { "source": "/admin", "destination": "/admin.html" },
-    { "source": "/admin-dashboard", "destination": "/admin-dashboard.html" }
+    { "source": "/admindashboard", "destination": "/admindashboard.html" }
   ]
 }
