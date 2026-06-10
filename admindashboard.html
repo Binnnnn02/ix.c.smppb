@@ -4,66 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin — IX-C SMP Permata Bunda</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --primary: #FF6B9D; --dark: #2d2d2d; --gray: #888; --bg: #f8f9fc; --card: #fff; --border: #ebebeb; --danger: #e53935; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--dark); min-height: 100vh; }
-        .layout { display: flex; min-height: 100vh; }
-        .sidebar { width: 240px; background: white; border-right: 1px solid var(--border); padding: 2rem 1.2rem; position: fixed; top: 0; left: 0; bottom: 0; display: flex; flex-direction: column; gap: 0.4rem; z-index: 100; transition: transform 0.3s; }
-        .sidebar-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--dark); margin-bottom: 1.8rem; padding-left: 0.5rem; }
-        .sidebar-logo span { background: linear-gradient(135deg, var(--primary), #b06cff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .nav-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.75rem 1rem; border-radius: 12px; cursor: pointer; font-size: 0.9rem; font-weight: 500; color: var(--gray); transition: all 0.2s; border: none; background: none; width: 100%; text-align: left; text-decoration: none; }
-        .nav-item:hover { background: #fdf0f5; color: var(--primary); }
-        .nav-item.active { background: linear-gradient(135deg, #fff0f6, #f5f0ff); color: var(--primary); font-weight: 700; }
-        .sidebar-spacer { flex: 1; }
-        .btn-logout { display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem 1rem; border-radius: 12px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--danger); border: 1px solid #ffcdd2; background: white; width: 100%; transition: all 0.2s; }
-        .btn-logout:hover { background: #ffebee; }
-        .main { margin-left: 240px; padding: 2rem 2.5rem; flex: 1; }
-        .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
-        .topbar h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; }
-        .panel { display: none; }
-        .panel.active { display: block; }
-        .card { background: var(--card); border-radius: 16px; padding: 1.8rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 1.5rem; }
-        .card h3 { font-size: 1.05rem; margin-bottom: 1.4rem; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .field { margin-bottom: 1rem; }
-        label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem; color: #555; }
-        input[type="text"], input[type="date"], input[type="url"], select, textarea { width: 100%; padding: 0.75rem 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.9rem; color: var(--dark); outline: none; transition: border-color 0.2s; background: white; }
-        input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(255,107,157,0.1); }
-        textarea { resize: vertical; min-height: 80px; }
-        .img-preview-wrap { margin-top: 0.8rem; display: none; }
-        .img-preview-wrap img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; border: 2px solid var(--border); }
-        .img-url-hint { font-size: 0.78rem; color: var(--gray); margin-top: 0.4rem; }
-        .btn { padding: 0.75rem 1.6rem; border-radius: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; transition: all 0.2s; }
-        .btn-primary { background: linear-gradient(135deg, var(--primary), #b06cff); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,157,0.35); }
-        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .btn-danger { background: #ffebee; color: var(--danger); }
-        .btn-danger:hover { background: #ffcdd2; }
-        .table-wrap { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-        th { text-align: left; padding: 0.7rem 1rem; background: #fafafa; font-weight: 700; color: #555; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
-        td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
-        tr:last-child td { border-bottom: none; }
-        tr:hover td { background: #fdf5f8; }
-        .thumb { width: 64px; height: 40px; object-fit: cover; border-radius: 6px; }
-        .emoji-thumb { width: 64px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border-radius: 6px; background: #ffeaf4; }
-        .badge-cat { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; background: #ffeaf4; color: var(--primary); }
-        .toast { position: fixed; bottom: 2rem; right: 2rem; background: #2d2d2d; color: white; padding: 0.9rem 1.5rem; border-radius: 12px; font-size: 0.9rem; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.25); z-index: 9999; opacity: 0; transform: translateY(12px); transition: all 0.3s; pointer-events: none; }
-        .toast.show { opacity: 1; transform: translateY(0); }
-        .toast.success { background: #2e7d32; }
-        .toast.error { background: var(--danger); }
-        .menu-toggle { display: none; background: white; border: 1px solid var(--border); border-radius: 10px; padding: 0.5rem 0.75rem; cursor: pointer; font-size: 1.2rem; }
-        @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .main { margin-left: 0; padding: 1.5rem 1rem; }
-            .menu-toggle { display: block; }
-            .form-row { grid-template-columns: 1fr; }
-        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        :root{--primary:#FF6B9D;--dark:#2d2d2d;--gray:#888;--bg:#f8f9fc;--border:#ebebeb;--danger:#e53935}
+        body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--dark)}
+        .layout{display:flex;min-height:100vh}
+        .sidebar{width:240px;background:#fff;border-right:1px solid var(--border);padding:2rem 1.2rem;position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;gap:.4rem;z-index:100;transition:transform .3s}
+        .sidebar-logo{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:1.8rem;padding-left:.5rem}
+        .sidebar-logo span{background:linear-gradient(135deg,var(--primary),#b06cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .nav-item{display:flex;align-items:center;gap:.7rem;padding:.75rem 1rem;border-radius:12px;cursor:pointer;font-size:.9rem;font-weight:500;color:var(--gray);border:none;background:none;width:100%;text-align:left;text-decoration:none;transition:all .2s}
+        .nav-item:hover{background:#fdf0f5;color:var(--primary)}
+        .nav-item.active{background:linear-gradient(135deg,#fff0f6,#f5f0ff);color:var(--primary);font-weight:700}
+        .sidebar-spacer{flex:1}
+        .btn-logout{display:flex;align-items:center;gap:.6rem;padding:.75rem 1rem;border-radius:12px;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--danger);border:1px solid #ffcdd2;background:#fff;width:100%;transition:all .2s}
+        .btn-logout:hover{background:#ffebee}
+        .main{margin-left:240px;padding:2rem 2.5rem;flex:1}
+        .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem}
+        .topbar h2{font-family:'Playfair Display',serif;font-size:1.8rem}
+        .panel{display:none}.panel.active{display:block}
+        .card{background:#fff;border-radius:16px;padding:1.8rem;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:1.5rem}
+        .card h3{font-size:1.05rem;margin-bottom:1.4rem}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .field{margin-bottom:1rem}
+        label{display:block;font-size:.82rem;font-weight:600;margin-bottom:.35rem;color:#555}
+        input,select,textarea{width:100%;padding:.75rem 1rem;border:2px solid var(--border);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--dark);outline:none;background:#fff;transition:border-color .2s}
+        input:focus,select:focus,textarea:focus{border-color:var(--primary)}
+        textarea{resize:vertical;min-height:80px}
+        .img-preview-wrap{margin-top:.8rem;display:none}
+        .img-preview-wrap img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;border:2px solid var(--border)}
+        .hint{font-size:.78rem;color:var(--gray);margin-top:.4rem}
+        .btn{padding:.75rem 1.6rem;border-radius:10px;font-family:'Poppins',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;border:none;transition:all .2s}
+        .btn-primary{background:linear-gradient(135deg,var(--primary),#b06cff);color:#fff}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,107,157,.35)}
+        .btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none}
+        .btn-danger{background:#ffebee;color:var(--danger)}
+        .btn-danger:hover{background:#ffcdd2}
+        .table-wrap{overflow-x:auto}
+        table{width:100%;border-collapse:collapse;font-size:.88rem}
+        th{text-align:left;padding:.7rem 1rem;background:#fafafa;font-weight:700;color:#555;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border)}
+        td{padding:.85rem 1rem;border-bottom:1px solid var(--border);vertical-align:middle}
+        tr:last-child td{border-bottom:none}
+        tr:hover td{background:#fdf5f8}
+        .thumb{width:64px;height:40px;object-fit:cover;border-radius:6px}
+        .emoji-thumb{width:64px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;border-radius:6px;background:#ffeaf4}
+        .badge-cat{display:inline-block;padding:.2rem .7rem;border-radius:20px;font-size:.75rem;font-weight:700;background:#ffeaf4;color:var(--primary)}
+        .toast{position:fixed;bottom:2rem;right:2rem;background:#2d2d2d;color:#fff;padding:.9rem 1.5rem;border-radius:12px;font-size:.9rem;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:9999;opacity:0;transform:translateY(12px);transition:all .3s;pointer-events:none}
+        .toast.show{opacity:1;transform:translateY(0)}
+        .toast.success{background:#2e7d32}
+        .toast.error{background:var(--danger)}
+        .menu-toggle{display:none;background:#fff;border:1px solid var(--border);border-radius:10px;padding:.5rem .75rem;cursor:pointer;font-size:1.2rem}
+        @media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:1.5rem 1rem}.menu-toggle{display:block}.form-row{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
@@ -71,20 +62,20 @@
 <div class="layout">
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">IX-C <span>Admin</span></div>
-        <button class="nav-item active" onclick="switchPanel('galeri', this)">🖼️ Galeri</button>
-        <button class="nav-item" onclick="switchPanel('agenda', this)">📅 Agenda</button>
+        <button class="nav-item active" id="navGaleri">🖼️ Galeri</button>
+        <button class="nav-item" id="navAgenda">📅 Agenda</button>
         <a href="/galeri" class="nav-item" target="_blank">🌐 Lihat Website</a>
         <div class="sidebar-spacer"></div>
-        <button class="btn-logout" onclick="doLogout()">🚪 Keluar</button>
+        <button class="btn-logout" id="btnLogout">🚪 Keluar</button>
     </aside>
 
     <main class="main">
         <div class="topbar">
             <div style="display:flex;align-items:center;gap:1rem">
-                <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+                <button class="menu-toggle" id="menuToggle">☰</button>
                 <h2 id="panelTitle">Kelola Galeri</h2>
             </div>
-            <span id="adminEmail" style="font-size:0.82rem;color:var(--gray)"></span>
+            <span id="adminEmail" style="font-size:.82rem;color:var(--gray)"></span>
         </div>
 
         <div class="panel active" id="panel-galeri">
@@ -118,15 +109,14 @@
                 </div>
                 <div class="field">
                     <label>URL Foto (opsional)</label>
-                    <input type="url" id="g-imageurl" placeholder="https://drive.google.com/file/d/..." oninput="previewImg(this.value)">
-                    <div class="img-url-hint">💡 Paste link foto dari Google Drive, langsung otomatis dikonversi</div>
+                    <input type="url" id="g-imageurl" placeholder="https://drive.google.com/file/d/...">
+                    <div class="hint">💡 Paste link foto dari Google Drive, otomatis dikonversi</div>
                     <div class="img-preview-wrap" id="imgPreviewWrap">
-                        <img id="imgPreview" alt="Preview foto">
+                        <img id="imgPreview" alt="Preview">
                     </div>
                 </div>
                 <button class="btn btn-primary" id="btnAddGallery">Simpan Foto</button>
             </div>
-
             <div class="card">
                 <h3>🗂️ Daftar Foto</h3>
                 <div class="table-wrap">
@@ -172,7 +162,6 @@
                 </div>
                 <button class="btn btn-primary" id="btnAddAgenda">Simpan Agenda</button>
             </div>
-
             <div class="card">
                 <h3>📋 Daftar Agenda</h3>
                 <div class="table-wrap">
@@ -188,191 +177,191 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- Firebase CDN (compat version — no module needed) -->
-<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-<script>eruda.init();</script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
 <script>
-// ── GANTI DENGAN CONFIG FIREBASE KAMU ──
-const firebaseConfig = {
+// ══ GANTI DENGAN CONFIG FIREBASE KAMU ══════════════════════════════
+var firebaseConfig = {
     apiKey:            "GANTI_API_KEY",
     authDomain:        "GANTI.firebaseapp.com",
     projectId:         "GANTI_PROJECT_ID",
     messagingSenderId: "GANTI_SENDER_ID",
     appId:             "GANTI_APP_ID"
 };
+// ═══════════════════════════════════════════════════════════════════
 
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db   = firebase.firestore();
-alert('Firebase OK');
+var auth = firebase.auth();
+var db   = firebase.firestore();
 
-// ── Auth guard ────────────────────────────────────────────────────
-auth.onAuthStateChanged(user => {
-    if (!user) { window.location.href = '/admin'; return; }
-    document.getElementById('adminEmail').textContent = user.email;
+function esc(s){var d=document.createElement('div');d.textContent=String(s||'');return d.innerHTML}
+
+function toDirect(url){
+    if(!url)return '';
+    var m1=url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if(m1)return 'https://drive.google.com/uc?export=view&id='+m1[1];
+    var m2=url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if(m2)return 'https://drive.google.com/uc?export=view&id='+m2[1];
+    return url;
+}
+
+function showToast(msg,type){
+    var el=document.getElementById('toast');
+    el.textContent=msg;
+    el.className='toast '+(type||'success')+' show';
+    setTimeout(function(){el.classList.remove('show')},3000);
+}
+
+// Auth
+auth.onAuthStateChanged(function(user){
+    if(!user){window.location.href='/admin';return}
+    document.getElementById('adminEmail').textContent=user.email;
     loadGallery();
     loadAgenda();
 });
 
-function doLogout() {
-    auth.signOut().then(() => window.location.href = '/admin');
-}
+document.getElementById('btnLogout').onclick=function(){
+    auth.signOut().then(function(){window.location.href='/admin'});
+};
 
-// ── Toast ─────────────────────────────────────────────────────────
-function toast(msg, type = 'success') {
-    const el = document.getElementById('toast');
-    el.textContent = msg;
-    el.className = 'toast ' + type + ' show';
-    setTimeout(() => el.classList.remove('show'), 3000);
-}
+// Sidebar
+document.getElementById('navGaleri').onclick=function(){
+    document.getElementById('panel-galeri').className='panel active';
+    document.getElementById('panel-agenda').className='panel';
+    document.getElementById('navGaleri').className='nav-item active';
+    document.getElementById('navAgenda').className='nav-item';
+    document.getElementById('panelTitle').textContent='Kelola Galeri';
+};
+document.getElementById('navAgenda').onclick=function(){
+    document.getElementById('panel-agenda').className='panel active';
+    document.getElementById('panel-galeri').className='panel';
+    document.getElementById('navAgenda').className='nav-item active';
+    document.getElementById('navGaleri').className='nav-item';
+    document.getElementById('panelTitle').textContent='Kelola Agenda';
+};
+document.getElementById('menuToggle').onclick=function(){
+    document.getElementById('sidebar').classList.toggle('open');
+};
 
-// ── Panel switch ──────────────────────────────────────────────────
-function switchPanel(name, btn) {
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('panel-' + name).classList.add('active');
-    document.querySelectorAll('.nav-item[onclick]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('panelTitle').textContent = name === 'galeri' ? 'Kelola Galeri' : 'Kelola Agenda';
-}
+// Image preview
+document.getElementById('g-imageurl').oninput=function(){
+    var url=toDirect(this.value.trim());
+    var wrap=document.getElementById('imgPreviewWrap');
+    var img=document.getElementById('imgPreview');
+    if(url){img.src=url;wrap.style.display='block';img.onerror=function(){wrap.style.display='none'}}
+    else{wrap.style.display='none'}
+};
 
-// ── Sanitize ──────────────────────────────────────────────────────
-function esc(str) {
-    const d = document.createElement('div');
-    d.textContent = String(str || '');
-    return d.innerHTML;
-}
+// ── GALLERY ────────────────────────────────────────────────────────
+document.getElementById('btnAddGallery').onclick=function(){
+    var title=document.getElementById('g-title').value.trim();
+    var cat=document.getElementById('g-category').value;
+    var date=document.getElementById('g-date').value;
+    var drive=document.getElementById('g-drive').value.trim();
+    var imgRaw=document.getElementById('g-imageurl').value.trim();
 
-// ── Drive URL converter ───────────────────────────────────────────
-function toDriveDirectUrl(url) {
-    if (!url) return '';
-    const m1 = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-    if (m1) return 'https://drive.google.com/uc?export=view&id=' + m1[1];
-    const m2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    if (m2) return 'https://drive.google.com/uc?export=view&id=' + m2[1];
-    return url;
-}
+    if(!title||!cat||!date){showToast('Judul, kategori, dan tanggal wajib diisi.','error');return}
 
-// ── Image preview ─────────────────────────────────────────────────
-function previewImg(raw) {
-    const wrap = document.getElementById('imgPreviewWrap');
-    const img  = document.getElementById('imgPreview');
-    if (!raw) { wrap.style.display = 'none'; return; }
-    const url = toDriveDirectUrl(raw);
-    img.src = url;
-    wrap.style.display = 'block';
-    img.onerror = () => wrap.style.display = 'none';
-    img.onload  = () => wrap.style.display = 'block';
-}
+    var btn=document.getElementById('btnAddGallery');
+    btn.disabled=true;btn.textContent='Menyimpan...';
 
-// ═══════════════════════════════════════════════════════════════════
-// GALLERY
-// ═══════════════════════════════════════════════════════════════════
-
-function addGallery() {
-    const title    = document.getElementById('g-title').value.trim();
-    const category = document.getElementById('g-category').value;
-    const dateVal  = document.getElementById('g-date').value;
-    const driveUrl = document.getElementById('g-drive').value.trim();
-    const imageUrl = document.getElementById('g-imageurl').value.trim();
-
-    if (!title || !category || !dateVal) {
-        toast('Judul, kategori, dan tanggal wajib diisi.', 'error');
-        return;
-    }
-
-    const btn = document.querySelector('#panel-galeri .btn-primary');
-    btn.disabled = true;
-    btn.textContent = 'Menyimpan...';
-
-    const dateDisplay = new Date(dateVal).toLocaleDateString('id-ID', {
-        day: '2-digit', month: 'short', year: 'numeric'
-    });
+    var dateDisplay=new Date(date).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
 
     db.collection('galeri').add({
-        title,
-        category,
-        date: dateDisplay,
-        dateRaw: dateVal,
-        driveUrl: driveUrl || '',
-        imageUrl: imageUrl ? toDriveDirectUrl(imageUrl) : '',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
-        toast('Foto berhasil ditambahkan! ✅');
-        ['g-title','g-category','g-date','g-drive','g-imageurl'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('imgPreviewWrap').style.display = 'none';
+        title:title,category:cat,date:dateDisplay,dateRaw:date,
+        driveUrl:drive||'',imageUrl:imgRaw?toDirect(imgRaw):'',
+        createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function(){
+        showToast('Foto berhasil ditambahkan! ✅');
+        ['g-title','g-category','g-date','g-drive','g-imageurl'].forEach(function(id){document.getElementById(id).value=''});
+        document.getElementById('imgPreviewWrap').style.display='none';
         loadGallery();
-    }).catch(err => {
-        console.error(err);
-        toast('Gagal: ' + err.message, 'error');
-    }).finally(() => {
-        btn.disabled = false;
-        btn.textContent = 'Simpan Foto';
+    }).catch(function(err){
+        showToast('Gagal: '+err.message,'error');
+    }).finally(function(){
+        btn.disabled=false;btn.textContent='Simpan Foto';
     });
-}
+};
 
-function loadGallery() {
-    const tbody = document.getElementById('galleryTableBody');
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray)">Memuat...</td></tr>';
-
-    db.collection('galeri').orderBy('createdAt', 'desc').get().then(snap => {
-        if (snap.empty) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray)">Belum ada foto</td></tr>';
-            return;
-        }
-        tbody.innerHTML = '';
-        snap.forEach(doc => {
-            const d = doc.data();
-            const tr = document.createElement('tr');
-            tr.innerHTML =
-                '<td>' + (d.imageUrl ? '<img class="thumb" src="' + esc(d.imageUrl) + '">' : '<div class="emoji-thumb">🖼️</div>') + '</td>' +
-                '<td>' + esc(d.title) + '</td>' +
-                '<td><span class="badge-cat">' + esc(d.category) + '</span></td>' +
-                '<td>' + esc(d.date) + '</td>' +
-                '<td>' + (d.driveUrl ? '<a href="' + esc(d.driveUrl) + '" target="_blank" style="color:#1a73e8;font-size:0.82rem">Buka ↗</a>' : '—') + '</td>' +
-                '<td><button class="btn btn-danger" onclick="deleteGallery(\'' + doc.id + '\')">🗑️ Hapus</button></td>';
+function loadGallery(){
+    var tbody=document.getElementById('galleryTableBody');
+    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray)">Memuat...</td></tr>';
+    db.collection('galeri').orderBy('createdAt','desc').get().then(function(snap){
+        if(snap.empty){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--gray)">Belum ada foto</td></tr>';return}
+        tbody.innerHTML='';
+        snap.forEach(function(doc){
+            var d=doc.data();
+            var tr=document.createElement('tr');
+            tr.innerHTML='<td>'+(d.imageUrl?'<img class="thumb" src="'+esc(d.imageUrl)+'">':`<div class="emoji-thumb">🖼️</div>`)+'</td>'+
+                '<td>'+esc(d.title)+'</td>'+
+                '<td><span class="badge-cat">'+esc(d.category)+'</span></td>'+
+                '<td>'+esc(d.date)+'</td>'+
+                '<td>'+(d.driveUrl?'<a href="'+esc(d.driveUrl)+'" target="_blank" style="color:#1a73e8;font-size:.82rem">Buka ↗</a>':'—')+'</td>'+
+                '<td><button class="btn btn-danger" onclick="delGallery(\''+doc.id+'\')">🗑️</button></td>';
             tbody.appendChild(tr);
         });
-    }).catch(err => {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:red;padding:2rem">' + err.message + '</td></tr>';
-    });
+    }).catch(function(err){tbody.innerHTML='<tr><td colspan="6" style="color:red;padding:2rem;text-align:center">'+err.message+'</td></tr>'});
 }
 
-function deleteGallery(id) {
-    if (!confirm('Hapus foto ini?')) return;
+window.delGallery=function(id){
+    if(!confirm('Hapus foto ini?'))return;
     db.collection('galeri').doc(id).delete()
-        .then(() => { toast('Foto dihapus.'); loadGallery(); })
-        .catch(err => toast('Gagal: ' + err.message, 'error'));
-}
+        .then(function(){showToast('Foto dihapus.');loadGallery()})
+        .catch(function(err){showToast('Gagal: '+err.message,'error')});
+};
 
-// ═══════════════════════════════════════════════════════════════════
-// AGENDA
-// ═══════════════════════════════════════════════════════════════════
+// ── AGENDA ────────────────────────────────────────────────────────
+document.getElementById('btnAddAgenda').onclick=function(){
+    var title=document.getElementById('a-title').value.trim();
+    var date=document.getElementById('a-date').value;
+    var desc=document.getElementById('a-desc').value.trim();
+    var emoji=document.getElementById('a-emoji').value.trim()||'📌';
+    var cat=document.getElementById('a-category').value;
 
-function addAgenda() {
-    const title    = document.getElementById('a-title').value.trim();
-    const dateVal  = document.getElementById('a-date').value;
-    const desc     = document.getElementById('a-desc').value.trim();
-    const emoji    = document.getElementById('a-emoji').value.trim() || '📌';
-    const category = document.getElementById('a-category').value;
+    if(!title||!date){showToast('Judul dan tanggal wajib diisi.','error');return}
 
-    if (!title || !dateVal) { toast('Judul dan tanggal wajib diisi.', 'error'); return; }
+    var btn=document.getElementById('btnAddAgenda');
+    btn.disabled=true;btn.textContent='Menyimpan...';
 
-    const btn = document.querySelector('#panel-agenda .btn-primary');
-    btn.disabled = true;
-    btn.textContent = 'Menyimpan...';
-
-    const dateDisplay = new Date(dateVal).toLocaleDateString('id-ID', {
-        day: '2-digit', month: 'short', year: 'numeric'
-    });
+    var dateDisplay=new Date(date).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
 
     db.collection('agenda').add({
-        title, date: dateDisplay, dateRaw: dateVal,
-        desc: desc || '', emoji, category,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
-        toast('Agenda berhasil ditambahkan! ✅');
-        ['a-title','a-date','a-desc','a-emoji'].forEach(id => document.getEle
+        title:title,date:dateDisplay,dateRaw:date,
+        desc:desc||'',emoji:emoji,category:cat,
+        createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function(){
+        showToast('Agenda berhasil ditambahkan! ✅');
+        ['a-title','a-date','a-desc','a-emoji'].forEach(function(id){document.getElementById(id).value=''});
+        loadAgenda();
+    }).catch(function(err){
+        showToast('Gagal: '+err.message,'error');
+    }).finally(function(){
+        btn.disabled=false;btn.textContent='Simpan Agenda';
+    });
+};
+
+function loadAgenda(){
+    var tbody=document.getElementById('agendaTableBody');
+    tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--gray)">Memuat...</td></tr>';
+    db.collection('agenda').orderBy('dateRaw','asc').get().then(function(snap){
+        if(snap.empty){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--gray)">Belum ada agenda</td></tr>';return}
+        tbody.innerHTML='';
+        snap.forEach(function(doc){
+            var d=doc.data();
+            var tr=document.createElement('tr');
+            tr.innerHTML='<td style="font-size:1.5rem;text-align:center">'+esc(d.emoji)+'</td>'+
+                '<td><strong>'+esc(d.title)+'</strong>'+(d.desc?'<div style="font-size:.78rem;color:var(--gray);margin-top:.2rem">'+esc(d.desc)+'</div>':'')+'</td>'+
+                '<td>'+esc(d.date)+'</td>'+
+                '<td><span class="badge-cat">'+esc(d.category)+'</span></td>'+
+                '<td><button class="btn btn-danger" onclick="delAgenda(\''+doc.id+'\')">🗑️</button></td>';
+            tbody.appendChild(tr);
+        });
+    }).catch(function(err){tbody.innerHTML='<tr><td colspan="5" style="color:red;padding:2rem;text-align:center">'+err.message+'</td></tr>'});
+}
+
+window.delAgenda=function(id){
+    if(!confirm('Hapus agenda ini?'))return;
+    db.collection('agenda').doc(id).delete()
+        .then(function(){showToast('Agenda dihapus.');loadAgenda()})
+        .catch(function(err){showToast('Gagal: '+err.message,'error')});
