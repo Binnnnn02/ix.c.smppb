@@ -142,12 +142,6 @@ function escapeHtml(str = '') {
 
 // ── Demo data (shown when Firestore not yet set up) ─────────────────
 const DEMO_DATA = [
-    { id:'d1', title:'Pembelajaran Matematika', category:'kelas',          date:'10 Jan 2025', emoji:'📚', color:'#FF6B9D', driveUrl:'' },
-    { id:'d2', title:'Presentasi Hasil Proyek',  category:'kelas',          date:'15 Jan 2025', emoji:'📊', color:'#FFB347', driveUrl:'' },
-    { id:'d3', title:'Gathering Kelas',           category:'acara',          date:'05 Feb 2025', emoji:'🎉', color:'#FFB347', driveUrl:'' },
-    { id:'d4', title:'Turnamen Futsal',           category:'olahraga',       date:'08 Feb 2025', emoji:'⚽', color:'#FF6B9D', driveUrl:'' },
-    { id:'d5', title:'Pameran Seni',              category:'ekstrakurikuler',date:'09 Mar 2025', emoji:'🎨', color:'#FF6B9D', driveUrl:'' },
-    { id:'d6', title:'Konser Musik',              category:'ekstrakurikuler',date:'15 Mar 2025', emoji:'🎵', color:'#6C5CE7', driveUrl:'' },
 ];
 
 // ── Boot ────────────────────────────────────────────────────────────
