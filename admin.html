@@ -177,7 +177,7 @@
 
     <button class="btn-login" id="btnLogin">Masuk</button>
 
-    <a href="index.html" class="back-link">← Kembali ke website</a>
+    <a href="/" class="back-link">← Kembali ke website</a>
 </div>
 
 <script type="module">
@@ -208,7 +208,7 @@ btnLogin.addEventListener('click', async () => {
 
     try {
         await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = 'admin-dashboard.html';
+        window.location.href = '/admindashboard';
     } catch (err) {
         // Map Firebase error codes → friendly messages (no raw DB info exposed)
         const map = {
