@@ -177,6 +177,132 @@
 
     <button class="btn-login" id="btnLogin">Masuk</button>
 
+    <a href="index.html" class="back-link">← Kembali ke website</a>
+</div>
+
+<script type="module">
+import { auth } from '/firebase-config.js';
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const btnLogin = document.getElementById('btnLogin');
+const errorMsg = document.getElementById('errorMsg');
+
+function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+}
+
+btnLogin.addEventListener('click', async () => {
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    errorMsg.classList.remove('visible');
+
+    if (!email || !password) {
+        showError('Email dan password wajib diisi.');
+        return;
+    }
+
+    btnLogin.disabled = true;
+    btnLogin.textContent = 'Memproses...';
+
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = 'admin-dashboard.html';
+    } catch (err) {
+        // Map Firebase error codes → friendly messages (no raw DB info exposed)
+        const map = {
+            'auth/user-not-found':    'Email tidak terdaftar.',
+            'auth/wrong-password':    'Password salah.',
+            'auth/invalid-email':     'Format email tidak valid.',
+            'auth/too-many-requests': 'Terlalu banyak percobaan. Coba lagi nanti.',
+            'auth/invalid-credential':'Email atau password salah.',
+        };
+        showError(map[err.code] || 'Terjadi kesalahan. Coba lagi.');
+    } finally {
+        btnLogin.disabled = false;
+        btnLogin.textContent = 'Masuk';
+    }
+});
+
+// Enter key support
+document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') btnLogin.click();
+});
+</script>
+</body>
+</html>
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 0.5rem;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-msg {
+            background: #fff0f0;
+            border: 1px solid #ffcdd2;
+            color: #c62828;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-msg.visible { display: block; }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--gray);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div class="login-logo">
+        <div class="badge">🔐</div>
+        <h1>Admin Panel</h1>
+        <p>IX-C SMP Permata Bunda</p>
+    </div>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <div class="form-group">
+        <label for="email">Email Admin</label>
+        <input type="email" id="email" placeholder="admin@ixcpb.my.id" autocomplete="email">
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <button class="btn-login" id="btnLogin">Masuk</button>
+
     <a href="/" class="back-link">← Kembali ke website</a>
 </div>
 
