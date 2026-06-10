@@ -208,7 +208,7 @@ btnLogin.addEventListener('click', async () => {
 
     try {
         await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = 'admin-dashboard.html';
+        window.location.href = 'admindashboard.html';
     } catch (err) {
         // Map Firebase error codes → friendly messages (no raw DB info exposed)
         const map = {
