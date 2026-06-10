@@ -1,149 +1,106 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Halaman Dalam Pengembangan</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
-}
-
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
-    padding:20px;
-}
-
-.container{
-    max-width:700px;
-    width:100%;
-    text-align:center;
-}
-
-.card{
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(10px);
-    border-radius:20px;
-    padding:40px;
-    box-shadow:0 10px 30px rgba(0,0,0,.3);
-}
-
-.badge{
-    display:inline-block;
-    background:#f59e0b;
-    color:black;
-    padding:8px 16px;
-    border-radius:999px;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-
-h1{
-    margin-bottom:15px;
-    font-size:2.5rem;
-}
-
-p{
-    color:#cbd5e1;
-    line-height:1.7;
-}
-
-#countdown{
-    margin:25px 0;
-    font-size:1.8rem;
-    font-weight:bold;
-    color:#38bdf8;
-}
-
-.btn{
-    display:inline-block;
-    margin-top:25px;
-    padding:12px 24px;
-    background:#38bdf8;
-    color:white;
-    text-decoration:none;
-    border-radius:10px;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.btn:hover{
-    transform:translateY(-2px);
-    opacity:.9;
-}
-
-.footer{
-    margin-top:20px;
-    font-size:.9rem;
-    color:#94a3b8;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Galeri foto momen-momen seru kelas IX-C SMP Permata Bunda. Koleksi lengkap dari berbagai acara dan aktivitas.">
+    <meta name="theme-color" content="#FF6B9D">
+    <title>Galeri - IX-C SMP Permata Bunda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/galeri.css">
 </head>
 <body>
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">IX-C</a>
+            <ul class="nav-links">
+                <li><a href="index.html">🏠 Home</a></li>
+                <li><a href="galeri.html" class="active">🖼️ Galeri</a></li>
+                <li><a href="tentang.html">👥 Tentang</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<div class="container">
-    <div class="card">
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h1>Galeri <span>Momen Seru</span></h1>
+        <p>Koleksi lengkap foto dari berbagai acara dan aktivitas kelas IX-C yang penuh kenangan indah</p>
+    </section>
 
-        <div class="badge">🚧 Dalam Pengembangan</div>
-
-        <h1>Halaman Sedang Dikerjakan</h1>
-
-        <p>
-            Halaman yang Anda tuju saat ini masih dalam tahap pengembangan.
-            Beberapa fitur mungkin belum tersedia atau masih dalam proses penyempurnaan.
-        </p>
-
-        <div id="countdown">Memuat...</div>
-
-        <p>
-            Perkiraan selesai:
-            <br>
-            <strong>10 Juni 2026 • 10:00 WIB</strong>
-        </p>
-
-        <a href="/" class="btn"> <-Kembali ke Beranda</a>
-
-        <div class="footer">
-            Terima kasih atas kesabarannya.
-        </div>
-
+    <!-- FILTER -->
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="kelas">📚 Kelas & Belajar</button>
+        <button class="filter-btn" data-filter="acara">🎊 Acara</button>
+        <button class="filter-btn" data-filter="olahraga">🏃 Olahraga</button>
+        <button class="filter-btn" data-filter="ekstrakurikuler">🎭 Ekstrakurikuler</button>
     </div>
-</div>
 
-<script>
-const targetDate = new Date("2026-06-10T10:00:00+07:00");
+    <!-- GALLERY -->
+    <section class="gallery-container">
+        <div class="gallery-grid" id="galleryGrid">
+            <div class="gallery-loading">
+                <div class="loading-spinner"></div>
+                <p>Memuat foto...</p>
+            </div>
+        </div>
+    </section>
 
-function updateCountdown(){
-    const now = new Date();
-    const diff = targetDate - now;
+    <!-- MODAL -->
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="Tutup">&times;</button>
+            <div class="modal-image-wrap" id="modalImage"></div>
+            <div class="modal-info">
+                <div class="modal-category" id="modalCategory"></div>
+                <div class="modal-title" id="modalTitle">Judul Foto</div>
+                <div class="modal-date" id="modalDate">Tanggal</div>
+                <a class="modal-drive-btn" id="modalDriveBtn" href="#" target="_blank" rel="noopener noreferrer">
+                    <svg width="20" height="20" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/>
+                        <path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/>
+                        <path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/>
+                        <path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/>
+                        <path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/>
+                        <path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/>
+                    </svg>
+                    Lihat di Google Drive
+                </a>
+            </div>
+        </div>
+    </div>
 
-    if(diff <= 0){
-        document.getElementById("countdown").innerHTML =
-            "✅ Halaman seharusnya sudah tersedia";
-        return;
-    }
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>IX-C SMP PB</h3>
+                <p>Dokumentasi dan kenangan kebersamaan kelas IX-C SMP Permata Bunda. Setiap momen adalah cerita yang berharga.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Menu</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="galeri.html">Galeri</a>
+                    <a href="tentang.html">Tentang</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Hubungi Kami</h3>
+                <div class="footer-links">
+                    <a href="https://www.instagram.com/9c.permatabunda" target="_blank">📱 Instagram</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 IX-C SMP Permata Bunda. All Rights Reserved.</p>
+        </div>
+    </footer>
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-
-    document.getElementById("countdown").innerHTML =
-        `${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik`;
-}
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-</script>
-
+    <script type="module" src="galeri.js"></script>
 </body>
 </html>
