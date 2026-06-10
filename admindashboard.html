@@ -124,7 +124,7 @@
                         <img id="imgPreview" alt="Preview foto">
                     </div>
                 </div>
-                <button class="btn btn-primary" onclick="addGallery()">Simpan Foto</button>
+                <button class="btn btn-primary" id="btnAddGallery">Simpan Foto</button>
             </div>
 
             <div class="card">
@@ -170,7 +170,7 @@
                         </select>
                     </div>
                 </div>
-                <button class="btn btn-primary" onclick="addAgenda()">Simpan Agenda</button>
+                <button class="btn btn-primary" id="btnAddAgenda">Simpan Agenda</button>
             </div>
 
             <div class="card">
@@ -208,6 +208,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db   = firebase.firestore();
+
+// ── Button event listeners ────────────────────────────────────────
+document.getElementById('btnAddGallery').addEventListener('click', addGallery);
+document.getElementById('btnAddAgenda').addEventListener('click', addAgenda);
 
 // ── Auth guard ────────────────────────────────────────────────────
 auth.onAuthStateChanged(user => {
@@ -371,7 +375,4 @@ function addAgenda() {
     db.collection('agenda').add({
         title, date: dateDisplay, dateRaw: dateVal,
         desc: desc || '', emoji, category,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
-        toast('Agenda berhasil ditambahkan! ✅');
-        ['a-title','a-date','a-desc','a-emoji'].forEach(id => document.getElementById(id).v
+      
