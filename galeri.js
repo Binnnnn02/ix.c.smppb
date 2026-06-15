@@ -9,42 +9,12 @@
 
 var GALLERY_DATA = [
     {
-        title    : 'Pembelajaran Matematika',
-        category : 'kelas',
-        date     : '10 Jan 2025',
-        imageUrl : '',   // ← paste link Drive di sini
-        driveUrl : '',
-    },
-    {
-        title    : 'Gathering Kelas',
+        title    : 'Bulan Bahasa',
         category : 'acara',
-        date     : '05 Feb 2025',
-        imageUrl : '',
-        driveUrl : '',
+        date     : '29 Okt 2025',
+        imageUrl : 'https://drive.google.com/file/d/1ReD6dTe5jaOXEwRdkZSHiisrmLetV2zy/view?usp=drivesdk', 
+        driveUrl : 'https://drive.google.com/drive/folders/1Qr7HGfxBM830kbqShDc0lkL7TRTN4_r_',
     },
-    {
-        title    : 'Turnamen Futsal',
-        category : 'olahraga',
-        date     : '08 Feb 2025',
-        imageUrl : '',
-        driveUrl : '',
-    },
-    {
-        title    : 'Pameran Seni',
-        category : 'ekstrakurikuler',
-        date     : '09 Mar 2025',
-        imageUrl : '',
-        driveUrl : '',
-    },
-
-    // Tambah foto baru di bawah sini ↓
-    // {
-    //     title    : 'Judul Foto',
-    //     category : 'acara',
-    //     date     : '15 Jun 2026',
-    //     imageUrl : 'https://drive.google.com/file/d/ID/view',
-    //     driveUrl : '',
-    // },
 ];
 
 // ── Tidak perlu diubah di bawah ini ──────────────────────────
