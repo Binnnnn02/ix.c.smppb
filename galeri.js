@@ -1,62 +1,53 @@
 // ============================================================
-//  TAMBAH FOTO DI SINI — isi array GALLERY_DATA di bawah
+//  TAMBAH FOTO DI SINI
 //
-//  Format tiap foto:
-//  {
-//    title    : 'Judul Foto',
-//    category : 'kelas' | 'acara' | 'olahraga' | 'ekstrakurikuler',
-//    date     : '10 Jan 2025',
-//    imageUrl : 'https://drive.google.com/file/d/ID_FOTO/view',
-//    driveUrl : '',   ← opsional, kosongkan kalau tidak ada
-//  }
+//  imageUrl: paste link Google Drive foto kamu
+//  Contoh:   'https://drive.google.com/file/d/1aBcDeF.../view'
+//
+//  category: 'kelas' | 'acara' | 'olahraga' | 'ekstrakurikuler'
 // ============================================================
 
-const GALLERY_DATA = [
-
-    // ── Contoh (ganti imageUrl dengan link Drive kamu) ──────
+var GALLERY_DATA = [
     {
         title    : 'Pembelajaran Matematika',
         category : 'kelas',
         date     : '10 Jan 2025',
-        imageUrl : 'https://drive.google.com/file/d/GANTI_ID_DI_SINI/view',
+        imageUrl : '',   // ← paste link Drive di sini
         driveUrl : '',
     },
     {
         title    : 'Gathering Kelas',
         category : 'acara',
         date     : '05 Feb 2025',
-        imageUrl : 'https://drive.google.com/file/d/GANTI_ID_DI_SINI/view',
+        imageUrl : '',
         driveUrl : '',
     },
     {
         title    : 'Turnamen Futsal',
         category : 'olahraga',
         date     : '08 Feb 2025',
-        imageUrl : 'https://drive.google.com/file/d/GANTI_ID_DI_SINI/view',
+        imageUrl : '',
         driveUrl : '',
     },
     {
         title    : 'Pameran Seni',
         category : 'ekstrakurikuler',
         date     : '09 Mar 2025',
-        imageUrl : 'https://drive.google.com/file/d/GANTI_ID_DI_SINI/view',
+        imageUrl : '',
         driveUrl : '',
     },
 
-    // ── Tambah foto baru di bawah sini ──────────────────────
+    // Tambah foto baru di bawah sini ↓
     // {
-    //     title    : 'Judul Foto Baru',
+    //     title    : 'Judul Foto',
     //     category : 'acara',
     //     date     : '15 Jun 2026',
-    //     imageUrl : 'https://drive.google.com/file/d/ID_FOTO/view',
+    //     imageUrl : 'https://drive.google.com/file/d/ID/view',
     //     driveUrl : '',
     // },
-
 ];
 
-// ============================================================
-//  Kode di bawah TIDAK perlu diubah
-// ============================================================
+// ── Tidak perlu diubah di bawah ini ──────────────────────────
 
 var CATEGORY_LABELS = {
     kelas          : '📚 Kelas & Belajar',
@@ -83,18 +74,20 @@ function toDirect(url) {
 
 function esc(str) {
     return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 var allItems = GALLERY_DATA.map(function(item, i) {
-    return Object.assign({}, item, {
+    return {
         id       : 'item-' + i,
+        title    : item.title,
+        category : item.category,
+        date     : item.date,
+        driveUrl : item.driveUrl || '',
         imgDirect: toDirect(item.imageUrl),
         emoji    : FALLBACK_EMOJI[item.category] || '🖼️',
-    });
+    };
 });
 
 var currentFilter = 'all';
@@ -116,10 +109,7 @@ function renderGallery(filter) {
 
     if (list.length === 0) {
         galleryGrid.innerHTML =
-            '<div class="gallery-loading">' +
-            '<div style="font-size:3rem">📷</div>' +
-            '<p>Belum ada foto di kategori ini</p>' +
-            '</div>';
+            '<div class="gallery-loading"><div>📷</div><p>Belum ada foto di kategori ini</p></div>';
         return;
     }
 
@@ -130,13 +120,20 @@ function renderGallery(filter) {
         card.className = 'gallery-item';
         card.style.animationDelay = (idx * 0.06) + 's';
 
-        var imgHtml = item.imgDirect
-            ? '<img src="' + esc(item.imgDirect) + '" alt="' + esc(item.title) + '" loading="lazy"' +
-              ' onerror="this.outerHTML=\'<div class=gallery-placeholder>' + esc(item.emoji) + '</div>\'">'
-            : '<div class="gallery-placeholder">' + item.emoji + '</div>';
+        // Gambar atau fallback emoji
+        var mediaHtml;
+        if (item.imgDirect) {
+            mediaHtml =
+                '<div class="gallery-img-wrap">' +
+                '<img src="' + esc(item.imgDirect) + '" alt="' + esc(item.title) + '" loading="lazy"' +
+                ' onerror="this.parentElement.innerHTML=\'<div class=gallery-placeholder>' + esc(item.emoji) + '</div>\'">' +
+                '</div>';
+        } else {
+            mediaHtml = '<div class="gallery-placeholder">' + item.emoji + '</div>';
+        }
 
         card.innerHTML =
-            '<div class="gallery-img-wrap">' + imgHtml + '</div>' +
+            mediaHtml +
             '<div class="gallery-overlay">' +
             '<div class="gallery-overlay-text">' + esc(item.title) + '</div>' +
             '<div class="gallery-overlay-date">' + esc(item.date) + '</div>' +
@@ -148,10 +145,14 @@ function renderGallery(filter) {
 }
 
 function openModal(item) {
-    modalImage.innerHTML = item.imgDirect
-        ? '<img src="' + esc(item.imgDirect) + '" alt="' + esc(item.title) + '"' +
-          ' onerror="this.outerHTML=\'<div class=modal-image-placeholder>' + esc(item.emoji) + '</div>\'">'
-        : '<div class="modal-image-placeholder">' + item.emoji + '</div>';
+    // Gambar atau fallback
+    if (item.imgDirect) {
+        modalImage.innerHTML =
+            '<img src="' + esc(item.imgDirect) + '" alt="' + esc(item.title) + '"' +
+            ' onerror="this.outerHTML=\'<div class=modal-image-placeholder>' + esc(item.emoji) + '</div>\'">';
+    } else {
+        modalImage.innerHTML = '<div class="modal-image-placeholder">' + item.emoji + '</div>';
+    }
 
     modalCategory.textContent = CATEGORY_LABELS[item.category] || item.category;
     modalTitle.textContent    = item.title;
@@ -171,7 +172,7 @@ function openModal(item) {
 function closeModal() {
     modal.classList.remove('active');
     document.body.style.overflow = '';
-    modalImage.innerHTML = '';
+    setTimeout(function() { modalImage.innerHTML = ''; }, 250);
 }
 
 filterBtns.forEach(function(btn) {
@@ -188,4 +189,4 @@ modal.addEventListener('click', function(e) { if (e.target === modal) closeModal
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
 renderGallery('all');
-        
+                
