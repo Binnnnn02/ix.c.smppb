@@ -6,6 +6,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyAiQExK8VQTmBfhtCUnd4e2BnOoWaKk3hA",
     authDomain: "ixcpb-26d18.firebaseapp.com",
     projectId: "ixcpb-26d18",
+    storageBucket: "ixcpb-26d18.firebasestorage.app",
     messagingSenderId: "416132545026",
     appId: "1:416132545026:web:82e2becb127421db60451b",
     measurementId: "G-KJ6Z1LFKLX"
