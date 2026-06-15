@@ -1,102 +1,169 @@
-import { db } from '/firebase-config.js';
-import {
-    collection, getDocs, query, orderBy
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// ============================================================
+//  TAMBAH FOTO DI SINI — isi array GALLERY_DATA di bawah
+//
+//  Format tiap foto:
+//  {
+//    title    : 'Judul Foto',
+//    category : 'kelas' | 'acara' | 'olahraga' | 'ekstrakurikuler',
+//    date     : '10 Jan 2025',
+//    imageUrl : 'https://drive.google.com/file/d/ID_FOTO/view',
+//    driveUrl : '',   ← opsional, kosongkan kalau tidak ada
+//  }
+// ============================================================
 
-const CATEGORY_LABELS = {
-    kelas:           '📚 Kelas & Belajar',
-    acara:           '🎊 Acara',
-    olahraga:        '🏃 Olahraga',
+const GALLERY_DATA = [
+
+    // ── Contoh (ganti imageUrl dengan link Drive kamu) ──────
+    {
+        title    : 'Pembelajaran Matematika',
+        category : 'kelas',
+        date     : '10 Jan 2025',
+        imageUrl : 'https://drive.google.com/file/d/GANTI_ID_DI_SINI/view',
+        driveUrl : '',
+    },
+    {
+        title    : 'Gathering Kelas',
+        category : 'acara',
+        date     : '05 Feb 2025',
+        imageUrl : 'https://drive.google.com/file/d/GANTI_ID_DI_SINI/view',
+        driveUrl : '',
+    },
+    {
+        title    : 'Turnamen Futsal',
+        category : 'olahraga',
+        date     : '08 Feb 2025',
+        imageUrl : 'https://drive.google.com/file/d/GANTI_ID_DI_SINI/view',
+        driveUrl : '',
+    },
+    {
+        title    : 'Pameran Seni',
+        category : 'ekstrakurikuler',
+        date     : '09 Mar 2025',
+        imageUrl : 'https://drive.google.com/file/d/GANTI_ID_DI_SINI/view',
+        driveUrl : '',
+    },
+
+    // ── Tambah foto baru di bawah sini ──────────────────────
+    // {
+    //     title    : 'Judul Foto Baru',
+    //     category : 'acara',
+    //     date     : '15 Jun 2026',
+    //     imageUrl : 'https://drive.google.com/file/d/ID_FOTO/view',
+    //     driveUrl : '',
+    // },
+
+];
+
+// ============================================================
+//  Kode di bawah TIDAK perlu diubah
+// ============================================================
+
+var CATEGORY_LABELS = {
+    kelas          : '📚 Kelas & Belajar',
+    acara          : '🎊 Acara',
+    olahraga       : '🏃 Olahraga',
     ekstrakurikuler: '🎭 Ekstrakurikuler',
 };
 
-const galleryGrid   = document.getElementById('galleryGrid');
-const filterBtns    = document.querySelectorAll('.filter-btn');
-const modal         = document.getElementById('modal');
-const modalClose    = document.getElementById('modalClose');
-const modalImage    = document.getElementById('modalImage');
-const modalCategory = document.getElementById('modalCategory');
-const modalTitle    = document.getElementById('modalTitle');
-const modalDate     = document.getElementById('modalDate');
-const modalDriveBtn = document.getElementById('modalDriveBtn');
+var FALLBACK_EMOJI = {
+    kelas          : '📚',
+    acara          : '🎊',
+    olahraga       : '🏃',
+    ekstrakurikuler: '🎭',
+};
 
-let allItems      = [];
-let currentFilter = 'all';
-
-function toDriveDirectUrl(url) {
+function toDirect(url) {
     if (!url) return '';
-    const m1 = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    var m1 = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
     if (m1) return 'https://drive.google.com/uc?export=view&id=' + m1[1];
-    const m2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    var m2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
     if (m2) return 'https://drive.google.com/uc?export=view&id=' + m2[1];
     return url;
 }
 
-function esc(str = '') {
-    return String(str)
+function esc(str) {
+    return String(str || '')
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+        .replace(/"/g, '&quot;');
 }
 
-async function fetchGallery() {
-    try {
-        const q = query(collection(db, 'galeri'), orderBy('createdAt', 'desc'));
-        const snapshot = await getDocs(q);
-        allItems = snapshot.docs.map(doc => {
-            const d = doc.data();
-            return { id: doc.id, ...d, imageUrl: toDriveDirectUrl(d.imageUrl || '') };
-        });
-    } catch (err) {
-        console.error('Firestore error:', err);
-        allItems = DEMO_DATA;
-    }
-    renderGallery(currentFilter);
-}
+var allItems = GALLERY_DATA.map(function(item, i) {
+    return Object.assign({}, item, {
+        id       : 'item-' + i,
+        imgDirect: toDirect(item.imageUrl),
+        emoji    : FALLBACK_EMOJI[item.category] || '🖼️',
+    });
+});
 
-function renderGallery(filter = 'all') {
-    const filtered = filter === 'all' ? allItems : allItems.filter(i => i.category === filter);
+var currentFilter = 'all';
 
-    if (filtered.length === 0) {
-        galleryGrid.innerHTML = '<div class="empty-state"><div class="empty-state-emoji">📷</div><p>Belum ada foto di kategori ini</p></div>';
+var galleryGrid   = document.getElementById('galleryGrid');
+var filterBtns    = document.querySelectorAll('.filter-btn');
+var modal         = document.getElementById('modal');
+var modalClose    = document.getElementById('modalClose');
+var modalImage    = document.getElementById('modalImage');
+var modalCategory = document.getElementById('modalCategory');
+var modalTitle    = document.getElementById('modalTitle');
+var modalDate     = document.getElementById('modalDate');
+var modalDriveBtn = document.getElementById('modalDriveBtn');
+
+function renderGallery(filter) {
+    var list = filter === 'all'
+        ? allItems
+        : allItems.filter(function(i) { return i.category === filter; });
+
+    if (list.length === 0) {
+        galleryGrid.innerHTML =
+            '<div class="gallery-loading">' +
+            '<div style="font-size:3rem">📷</div>' +
+            '<p>Belum ada foto di kategori ini</p>' +
+            '</div>';
         return;
     }
 
     galleryGrid.innerHTML = '';
-    filtered.forEach((item, i) => {
-        const el = document.createElement('div');
-        el.className = 'gallery-item';
-        el.style.animationDelay = i * 0.07 + 's';
 
-        const inner = item.imageUrl
-            ? '<img src="' + esc(item.imageUrl) + '" alt="' + esc(item.title) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
-            : '';
+    list.forEach(function(item, idx) {
+        var card = document.createElement('div');
+        card.className = 'gallery-item';
+        card.style.animationDelay = (idx * 0.06) + 's';
 
-        const placeholder = '<div class="gallery-placeholder" style="display:' + (item.imageUrl ? 'none' : 'flex') + ';background:linear-gradient(135deg,' + (item.color||'#FF6B9D') + ',' + (item.color||'#FF6B9D') + '99)">' + (item.emoji || '🖼️') + '</div>';
+        var imgHtml = item.imgDirect
+            ? '<img src="' + esc(item.imgDirect) + '" alt="' + esc(item.title) + '" loading="lazy"' +
+              ' onerror="this.outerHTML=\'<div class=gallery-placeholder>' + esc(item.emoji) + '</div>\'">'
+            : '<div class="gallery-placeholder">' + item.emoji + '</div>';
 
-        el.innerHTML = inner + placeholder + '<div class="gallery-overlay"><div class="gallery-overlay-text">' + esc(item.title) + '</div><div class="gallery-overlay-date">' + esc(item.date) + '</div></div>';
-        el.addEventListener('click', () => openModal(item));
-        galleryGrid.appendChild(el);
+        card.innerHTML =
+            '<div class="gallery-img-wrap">' + imgHtml + '</div>' +
+            '<div class="gallery-overlay">' +
+            '<div class="gallery-overlay-text">' + esc(item.title) + '</div>' +
+            '<div class="gallery-overlay-date">' + esc(item.date) + '</div>' +
+            '</div>';
+
+        card.addEventListener('click', function() { openModal(item); });
+        galleryGrid.appendChild(card);
     });
 }
 
 function openModal(item) {
-    if (item.imageUrl) {
-        modalImage.innerHTML = '<img src="' + esc(item.imageUrl) + '" alt="' + esc(item.title) + '" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="modal-image-placeholder" style="display:none;background:linear-gradient(135deg,' + (item.color||'#FF6B9D') + ',' + (item.color||'#FF6B9D') + '99)">' + (item.emoji||'🖼️') + '</div>';
-    } else {
-        modalImage.innerHTML = '<div class="modal-image-placeholder" style="background:linear-gradient(135deg,' + (item.color||'#FF6B9D') + ',' + (item.color||'#FF6B9D') + '99)">' + (item.emoji||'🖼️') + '</div>';
-    }
+    modalImage.innerHTML = item.imgDirect
+        ? '<img src="' + esc(item.imgDirect) + '" alt="' + esc(item.title) + '"' +
+          ' onerror="this.outerHTML=\'<div class=modal-image-placeholder>' + esc(item.emoji) + '</div>\'">'
+        : '<div class="modal-image-placeholder">' + item.emoji + '</div>';
+
     modalCategory.textContent = CATEGORY_LABELS[item.category] || item.category;
     modalTitle.textContent    = item.title;
     modalDate.textContent     = item.date;
+
     if (item.driveUrl) {
         modalDriveBtn.href = item.driveUrl;
-        modalDriveBtn.classList.remove('hidden');
+        modalDriveBtn.style.display = 'inline-flex';
     } else {
-        modalDriveBtn.classList.add('hidden');
+        modalDriveBtn.style.display = 'none';
     }
+
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -104,11 +171,12 @@ function openModal(item) {
 function closeModal() {
     modal.classList.remove('active');
     document.body.style.overflow = '';
+    modalImage.innerHTML = '';
 }
 
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
+filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        filterBtns.forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
         currentFilter = btn.dataset.filter;
         renderGallery(currentFilter);
@@ -116,16 +184,8 @@ filterBtns.forEach(btn => {
 });
 
 modalClose.addEventListener('click', closeModal);
-modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
-const DEMO_DATA = [
-    { id:'d1', title:'Pembelajaran Matematika', category:'kelas',           date:'10 Jan 2025', emoji:'📚', color:'#FF6B9D', driveUrl:'' },
-    { id:'d2', title:'Presentasi Hasil Proyek',  category:'kelas',           date:'15 Jan 2025', emoji:'📊', color:'#FFB347', driveUrl:'' },
-    { id:'d3', title:'Gathering Kelas',           category:'acara',           date:'05 Feb 2025', emoji:'🎉', color:'#FFB347', driveUrl:'' },
-    { id:'d4', title:'Turnamen Futsal',           category:'olahraga',        date:'08 Feb 2025', emoji:'⚽', color:'#FF6B9D', driveUrl:'' },
-    { id:'d5', title:'Pameran Seni',              category:'ekstrakurikuler', date:'09 Mar 2025', emoji:'🎨', color:'#FF6B9D', driveUrl:'' },
-    { id:'d6', title:'Konser Musik',              category:'ekstrakurikuler', date:'15 Mar 2025', emoji:'🎵', color:'#6C5CE7', driveUrl:'' },
-];
-
-document.addEventListener('DOMContentLoaded', fetchGallery);
+renderGallery('all');
+    
